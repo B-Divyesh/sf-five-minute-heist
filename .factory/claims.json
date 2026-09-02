@@ -1,0 +1,51 @@
+[
+  {
+    "id": "complete-run",
+    "claim": "A valid five-move plan reaches the end screen.",
+    "where": "game, README",
+    "test": "npm test -- --grep @claim:complete-run",
+    "sandbox": "fresh Chromium context at /demo; enter the generated valid plan and assert the escape result"
+  },
+  {
+    "id": "restart-reset",
+    "claim": "Play again resets the plan.",
+    "where": "end screen",
+    "test": "npm test -- --grep @claim:restart-reset",
+    "sandbox": "complete /demo, choose Play again, and assert all five plan slots are empty"
+  },
+  {
+    "id": "settings-persist",
+    "claim": "The sound choice stays in this browser.",
+    "where": "game, privacy page",
+    "test": "npm test -- --grep @claim:settings-persist",
+    "sandbox": "fresh /demo storage; turn sound on, reload, and assert the setting remains on"
+  },
+  {
+    "id": "offline-reload",
+    "claim": "Works offline after your first visit.",
+    "where": "landing facts, README",
+    "test": "npm test -- --grep @claim:offline-reload",
+    "sandbox": "own browser context; visit /demo, wait for service worker control, go offline, reload, and assert the board loads"
+  },
+  {
+    "id": "local-only",
+    "claim": "The game loads its own files from this site.",
+    "where": "landing privacy section, privacy page, README",
+    "test": "npm test -- --grep @claim:local-only",
+    "sandbox": "fresh /demo context; record requests through a planning flow and assert every URL is same-origin"
+  },
+  {
+    "id": "result-glyph",
+    "claim": "A sealed glyph shares the result without directions.",
+    "where": "how it works, end screen",
+    "test": "npm test -- --grep @claim:result-glyph",
+    "sandbox": "complete /demo, copy the result, and assert five non-direction glyphs and no direction arrows"
+  },
+  {
+    "id": "frame-rate",
+    "claim": "The game targets 60 fps on a mid-range phone.",
+    "where": "README, handoff",
+    "test": "npm test -- --grep @claim:frame-rate",
+    "sandbox": "390x844 Chromium viewport; sample 60 animation frames and assert at least 50 fps"
+  }
+]

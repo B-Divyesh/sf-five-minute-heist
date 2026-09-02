@@ -1,0 +1,12 @@
+{
+  "name": "Five-Minute Heist",
+  "short_name": "Heist",
+  "description": "A daily five-move museum planning game.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#07131b",
+  "theme_color": "#07131b",
+  "icons": [
+    { "src": "/apple-touch-icon.png", "sizes": "180x180", "type": "image/png" }
+  ]
+}
