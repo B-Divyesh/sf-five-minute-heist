@@ -1,42 +1,26 @@
-# Five-Minute Heist repair handoff — PASS
+# Five-Minute Heist independent verification 4 — PASS
 
 ## Result
 
-Release-blocking QA finding from `a48f2fc` is repaired and deployed. Product repair commit: `eb8e8f9` (`fix: stabilize mobile frame-rate claim`). Live URL: https://five-minute-heist.sociobot.in
+Candidate `6f1f08fe6b4911d6d12fbc9b187e395f0aeb83d2` is **accepted** at https://five-minute-heist.sociobot.in. No critical, high, medium, or low product defect was found. Full evidence is in [verification-4.md](verification-4.md).
 
-## Repair
+The live deployment matches the candidate byte for byte for the HTML, hashed JavaScript and CSS, service worker, 404 page, manifest, mobile art, and display font.
 
-The prior frame-rate claim took one idle 60-frame sample while the 390 px scene continuously composited both hero drift and a large `backdrop-filter`. That probe was sensitive to a cold compositor stall: the required repeated reproduction produced 44.59, 41.77, 37.50, 41.25, 43.42, 42.31, 38.37, and 40.74 fps samples.
+## Verification completed
 
-On phone layouts the atmospheric hero is now static and the game panel uses an opaque glass treatment without backdrop blur. Gameplay, controls, route animation, desktop drift, reduced-motion behavior, and all puzzle rules are unchanged.
+- Every command in `.factory/claims.json` passed separately: 17/17 claims.
+- `npm test` passed: 4 unit tests and 21 Chromium tests.
+- `npm run build` passed and produced `dist/`; type checking is included.
+- `npm audit --audit-level=high` passed with 0 vulnerabilities.
+- `npm run test:live` passed all 21 tests against production.
+- Factory `verify-url.sh` passed root and demo with zero console errors.
+- Lighthouse mobile scored 98 Performance, 100 Accessibility, 100 Best Practices, and 100 SEO; LCP was 1.5 s and CLS was 0.
+- Active-play frame samples were 60.012, 60.006, and 60.006 fps; the 60.006 fps median passes the 50 fps floor.
+- The live scripted run covered invalid and excess input, three loss conditions, recovery, keyboard and touch wins, pause/resume, copy, restart, saved settings/progress, and the real end screen.
+- Axe found no serious/critical issue. Keyboard focus, 44 px targets, 200% text, 390 px layout, reduced motion, route focus, and the designed 404 passed.
+- The request log remained same-origin with no cookies. Security headers, cache policy, service-worker update, and offline reload passed.
 
-The `@claim:frame-rate` regression test now measures actual active play rather than idle page cadence: it starts three fresh sample plans at 390 × 844, samples 60 rendered frames during each running plan (after five warm-up frames), records the values as an attachment, and asserts their median is at least 50 fps. This gives repeated evidence without dropping real rendering work or lowering the advertised floor. The claim manifest, README, and visual thesis describe the same method.
-
-## Verification
-
-- `npm ci`: passed (61 packages, 0 vulnerabilities) before reproduction.
-- Reproduced the old one-shot failure with `npx playwright test --grep @claim:frame-rate --repeat-each=10`; failures were 37.50–44.59 fps.
-- First repaired local claim run: `npm test -- --grep @claim:frame-rate` passed. Subsequent local JSON evidence: 60.000, 60.000, 60.006 fps; median 60.000 fps.
-- `npm test`: passed — 4 deterministic core tests and all 21 Chromium browser tests. This covers desktop and 390 px mobile, keyboard, touch, pause/restart, storage, privacy request log, offline reload/update, routes, 200% text, reduced motion, and Axe serious/critical checks.
-- `npm run build`: passed. Output: JS 23.51 kB raw / 8.73 kB gzip; CSS 13.19 kB raw / 3.90 kB gzip.
-- `npm audit --audit-level=high`: passed, 0 vulnerabilities. Type checking is part of `npm run build`; no separate lint or consumer package applies to this static browser game.
-- `/opt/fleet/lib/verify-url.sh` passed against live root and demo. Root: 622 ms, title/lang/one H1/main/alt/button checks all valid, zero console errors. Demo: 654 ms with the same result. Evidence: [root verification](evidence/repair-2/verify-root/verify.json) and [demo verification](evidence/repair-2/verify-demo/verify.json).
-- `npm run test:live`: passed — all 21 tests. The live frame claim recorded 60.000, 60.000, 60.000 fps; median 60.000 fps.
-- Live identity check: SHA-256 matched the current `dist/` for `index.html`, `assets/index-B3M3w3lc.js`, `assets/index-CnxBolkV.css`, `sw.js`, and `art/museum-night-768.webp`. Live headers retain CSP with `connect-src 'self'` and `frame-ancestors 'none'`, HSTS, `nosniff`, referrer policy, permissions policy, and immutable hashed-asset caching.
-
-## Deployment
-
-Deployed the committed production build with `/opt/fleet/lib/deploy-static.sh five-minute-heist dist`.
-
-- Static Web Apps deployment: `eecbdcfc-c8ac-4a22-b3d1-cfb83ce4b33e`
-- Host: `zealous-smoke-0166b1810.3.azurestaticapps.net`
-- Custom domain status: Ready; HTTPS root returned 200.
-
-## Scope and known gaps
-
-There are no known release blockers. This remains a local-first static browser game: no backend, account, billing, API endpoint, Entra flow, rate limit, or server-side persistence exists, so server response-policy/429/concurrency checks are not applicable. No user data leaves the browser during play.
-
-To verify from a fresh checkout:
+## Run again
 
 ```sh
 npm ci
@@ -45,3 +29,9 @@ npm run build
 npm audit --audit-level=high
 npm run test:live
 ```
+
+## Scope and remaining work
+
+Only verification documentation and evidence were added; product code was not changed. There are no known release blockers or follow-up defects.
+
+The product is static and has no server-side endpoint, unlock request, account, payment, sign-in, or backend state. API rate limiting, concurrency, server persistence, and Microsoft Entra checks do not apply.
