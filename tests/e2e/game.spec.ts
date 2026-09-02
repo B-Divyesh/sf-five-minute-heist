@@ -80,6 +80,29 @@ test("@claim:frame-rate animation frames stay above 50 fps at phone size", async
   expect(fps).toBeGreaterThanOrEqual(50);
 });
 
+test("@claim:answer-not-shipped the answer is absent from initial page source", async ({ request }) => {
+  const response = await request.get("/demo");
+  const html = await response.text();
+  expect(html).not.toContain(sampleSolution.join(""));
+  expect(html).not.toContain(JSON.stringify(sampleSolution));
+});
+
+test("@claim:solvable-generator dated boards all have a valid plan", async () => {
+  for (let day = 1; day <= 31; day += 1) {
+    const puzzle = generatePuzzle(`2026-10-${String(day).padStart(2, "0")}`);
+    expect(findSolutions(puzzle).length).toBeGreaterThan(0);
+  }
+});
+
+test("@claim:demo-isolation reset leaves the daily namespace untouched", async ({ page }) => {
+  await page.evaluate(() => localStorage.setItem("five-minute-heist:sentinel", "daily-progress"));
+  await page.locator('[data-direction="U"]').click();
+  await page.getByRole("button", { name: "Reset demo" }).click();
+  const realValue = await page.evaluate(() => localStorage.getItem("five-minute-heist:sentinel"));
+  expect(realValue).toBe("daily-progress");
+  await expect(page.getByText("0/5")).toBeVisible();
+});
+
 test("mobile layout, routes, and accessibility baseline", async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
   await expect(page.getByRole("img", { name: /Five by five gallery/ })).toBeVisible();

@@ -43,19 +43,19 @@ On phones, the scene becomes a shallow backdrop and the board stacks below the s
 - The board previews the planned player and guard positions at each slot.
 - Backspace removes the last move; arrow keys add moves; Enter executes.
 - Execution advances one room at a time and reports loot, escape, or detection.
-- Failure keeps the attempted plan visible until the player edits or resets it.
+- Failure keeps the attempted plan visible until the player edits it.
 - Sound is off by default and only starts after a deliberate toggle.
 
 Difficulty comes from deterministic guard loops, walls, and an optional loot-before-exit rule. The generator searches every five-move route and accepts only solvable daily boards. It favors 2–18 valid plans so a run stays within 4–6 minutes.
 
 ## Motion
 
-The signature motion is a light pulse that travels along the queued route during execution. UI transitions use 180–260 ms opacity and transform changes. The background drifts by at most 12 px. There is no flashing above 3 Hz. With `prefers-reduced-motion`, travel, drift, and entrance movement become instant opacity changes.
+The signature motion is a stepped light that travels along the queued route during execution. UI transitions use 180–260 ms opacity and transform changes. The background drifts by at most 12 px. There is no flashing above 3 Hz. With `prefers-reduced-motion`, travel, drift, and entrance movement become instant opacity changes.
 
 ## Asset plan and provenance
 
 - `public/art/museum-night-*.webp`: original generated hero scene, used as an atmospheric background and social source.
-- `public/og-image.webp`: a 1200 × 630 crop composed from the original scene with code-rendered interface accents. No critical text appears inside the image.
+- `public/og-image.webp`: a 1200 × 630 crop derived from the original scene. No critical text appears inside the image.
 - Board symbols and wordmark are hand-authored CSS/SVG and use no third-party icon set.
 
 ### Generation prompt sheet

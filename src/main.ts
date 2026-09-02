@@ -106,9 +106,11 @@ function makeGame(): GameState {
     seed,
     phase: saved.completedPlan ? "won" : "planning",
     currentStep: saved.completedPlan ? MOVE_COUNT : saved.plan.length,
-    message: saved.completedPlan
-      ? "You already escaped this gallery. Play it again or copy your result."
-      : "Add five moves. The board previews the guards after each move.",
+    message: !storageAvailable
+      ? "Progress could not be saved. Keep this tab open to finish your plan."
+      : saved.completedPlan
+        ? "You already escaped this gallery. Play it again or copy your result."
+        : "Add five moves. The board previews the guards after each move.",
     copied: false
   };
 }
@@ -454,10 +456,10 @@ function runFrame(time: number): void {
     playTone(result.caught || result.blocked ? 120 : 420 + game.currentStep * 25, 0.075);
     if (result.caught) {
       game.phase = "failed";
-      game.message = `Guard spotted you on move ${game.currentStep}. Remove a move or reset the plan.`;
+      game.message = `Guard spotted you on move ${game.currentStep}. Remove moves and try another route.`;
     } else if (result.blocked) {
       game.phase = "failed";
-      game.message = `Move ${game.currentStep} hit a wall. Remove a move or reset the plan.`;
+      game.message = `Move ${game.currentStep} hit a wall. Remove moves and try another route.`;
     } else if (game.currentStep === MOVE_COUNT) {
       const final = simulatePlan(game.puzzle, game.plan);
       if (final.won) {
@@ -606,6 +608,7 @@ document.addEventListener("visibilitychange", () => {
     game.phase = "paused";
     game.message = `Paused after move ${game.currentStep}. Resume when you are ready.`;
     cancelAnimationFrame(animationFrame);
+    render();
   }
 });
 

@@ -47,5 +47,26 @@
     "where": "README, handoff",
     "test": "npm test -- --grep @claim:frame-rate",
     "sandbox": "390x844 Chromium viewport; sample 60 animation frames and assert at least 50 fps"
+  },
+  {
+    "id": "answer-not-shipped",
+    "claim": "The daily answer is not embedded in page source.",
+    "where": "landing privacy section, README",
+    "test": "npm test -- --grep @claim:answer-not-shipped",
+    "sandbox": "fetch the initial HTML for /demo and assert the generated valid direction sequence is absent"
+  },
+  {
+    "id": "solvable-generator",
+    "claim": "Every generated daily board is solvable.",
+    "where": "README",
+    "test": "npm test -- --grep @claim:solvable-generator",
+    "sandbox": "generate 31 dated boards and assert each has a valid five-move solution"
+  },
+  {
+    "id": "demo-isolation",
+    "claim": "Reset demo clears only sample progress.",
+    "where": "demo banner, README",
+    "test": "npm test -- --grep @claim:demo-isolation",
+    "sandbox": "set a sentinel in the real namespace, reset /demo, and assert the real value is unchanged"
   }
 ]
