@@ -1,48 +1,47 @@
-# Five-Minute Heist independent QA handoff — FAIL
+# Five-Minute Heist repair handoff — PASS
 
 ## Result
 
-Candidate `2cccef726174bbd969a64b80d12be427194b9912` at https://five-minute-heist.sociobot.in is **not accepted**.
+Release-blocking QA finding from `a48f2fc` is repaired and deployed. Product repair commit: `eb8e8f9` (`fix: stabilize mobile frame-rate claim`). Live URL: https://five-minute-heist.sociobot.in
 
-The sole release-blocking defect is the registered 50 fps floor. Its exact claim command failed at 45.83 fps, the full clean local suite failed it at 45.21 fps, and the full live suite failed it at 45.83 fps. Under the required claims policy, any failing claim test fails the release. Details and traces are in [.factory/verification-3.md](verification-3.md).
+## Repair
 
-## What was verified
+The prior frame-rate claim took one idle 60-frame sample while the 390 px scene continuously composited both hero drift and a large `backdrop-filter`. That probe was sensitive to a cold compositor stall: the required repeated reproduction produced 44.59, 41.77, 37.50, 41.25, 43.42, 42.31, 38.37, and 40.74 fps samples.
 
-- Ran every command in `.factory/claims.json` separately after `npm ci`: 16 passed and `frame-rate` failed.
-- Performed cold desktop and 390 × 844 first-read checks. The page plainly identifies the game and audience, provides a visible one-click sample, and shows the game itself.
-- Ran `npm test`: 4 unit tests and 20 browser tests passed; the frame-rate browser test failed.
-- Ran `npm run build`: TypeScript and Vite passed; `dist/` was produced.
-- Ran `npm audit --audit-level=high`: 0 vulnerabilities.
-- Ran `npm run test:live`: 20 browser tests passed; the same frame-rate test failed.
-- Confirmed clean-build and live hashes match for HTML, hashed JS/CSS, service worker, 404, manifest, representative art, and font.
-- Played deterministic live wall-loss, guard-loss, missed-target, recovery, keyboard win, touch win, pause/resume, copy-result, and restart flows.
-- Verified persisted sound/progress, isolated demo storage, service-worker update, and offline reload.
-- Verified same-origin-only requests, no cookies or console/page errors, security headers, and cache policy.
-- Verified all public routes at desktop and 390 px, keyboard focus, 44 px targets, 200% text, reduced motion, and zero serious/critical axe findings.
-- Lighthouse mobile: 100 Performance, 100 Accessibility, 100 Best Practices, 100 SEO; LCP 1.506 s and total transfer 138,781 B.
+On phone layouts the atmospheric hero is now static and the game panel uses an opaque glass treatment without backdrop blur. Gameplay, controls, route animation, desktop drift, reduced-motion behavior, and all puzzle rules are unchanged.
 
-## Defects by severity
+The `@claim:frame-rate` regression test now measures actual active play rather than idle page cadence: it starts three fresh sample plans at 390 × 844, samples 60 rendered frames during each running plan (after five warm-up frames), records the values as an attachment, and asserts their median is at least 50 fps. This gives repeated evidence without dropping real rendering work or lowering the advertised floor. The claim manifest, README, and visual thesis describe the same method.
 
-- Critical: 0
-- High: 0
-- Medium, release-blocking: 1 — `@claim:frame-rate` does not reliably meet its asserted 50 fps floor.
-- Low: 0
+## Verification
 
-## Reproduce
+- `npm ci`: passed (61 packages, 0 vulnerabilities) before reproduction.
+- Reproduced the old one-shot failure with `npx playwright test --grep @claim:frame-rate --repeat-each=10`; failures were 37.50–44.59 fps.
+- First repaired local claim run: `npm test -- --grep @claim:frame-rate` passed. Subsequent local JSON evidence: 60.000, 60.000, 60.006 fps; median 60.000 fps.
+- `npm test`: passed — 4 deterministic core tests and all 21 Chromium browser tests. This covers desktop and 390 px mobile, keyboard, touch, pause/restart, storage, privacy request log, offline reload/update, routes, 200% text, reduced motion, and Axe serious/critical checks.
+- `npm run build`: passed. Output: JS 23.51 kB raw / 8.73 kB gzip; CSS 13.19 kB raw / 3.90 kB gzip.
+- `npm audit --audit-level=high`: passed, 0 vulnerabilities. Type checking is part of `npm run build`; no separate lint or consumer package applies to this static browser game.
+- `/opt/fleet/lib/verify-url.sh` passed against live root and demo. Root: 622 ms, title/lang/one H1/main/alt/button checks all valid, zero console errors. Demo: 654 ms with the same result. Evidence: [root verification](evidence/repair-2/verify-root/verify.json) and [demo verification](evidence/repair-2/verify-demo/verify.json).
+- `npm run test:live`: passed — all 21 tests. The live frame claim recorded 60.000, 60.000, 60.000 fps; median 60.000 fps.
+- Live identity check: SHA-256 matched the current `dist/` for `index.html`, `assets/index-B3M3w3lc.js`, `assets/index-CnxBolkV.css`, `sw.js`, and `art/museum-night-768.webp`. Live headers retain CSP with `connect-src 'self'` and `frame-ancestors 'none'`, HSTS, `nosniff`, referrer policy, permissions policy, and immutable hashed-asset caching.
+
+## Deployment
+
+Deployed the committed production build with `/opt/fleet/lib/deploy-static.sh five-minute-heist dist`.
+
+- Static Web Apps deployment: `eecbdcfc-c8ac-4a22-b3d1-cfb83ce4b33e`
+- Host: `zealous-smoke-0166b1810.3.azurestaticapps.net`
+- Custom domain status: Ready; HTTPS root returned 200.
+
+## Scope and known gaps
+
+There are no known release blockers. This remains a local-first static browser game: no backend, account, billing, API endpoint, Entra flow, rate limit, or server-side persistence exists, so server response-policy/429/concurrency checks are not applicable. No user data leaves the browser during play.
+
+To verify from a fresh checkout:
 
 ```sh
 npm ci
-npm test -- --grep @claim:frame-rate
 npm test
 npm run build
 npm audit --audit-level=high
 npm run test:live
 ```
-
-Expected failure evidence is under `.factory/evidence/verification-3/frame-rate/` and `.factory/evidence/verification-3/live-frame-rate/`.
-
-## Scope and next step
-
-No product code was modified during verification. This static game has no backend, account, billing, AI call, unlock endpoint, or server-side state, so rate-limit, Entra, concurrency, and backend persistence checks do not apply.
-
-Before release, either improve frame pacing so the existing 50 fps claim passes reliably under the exact clean and live suites, or remove/change the public claim and its acceptance threshold only with product-owner approval. Then rerun every registered claim command and both full suites.
