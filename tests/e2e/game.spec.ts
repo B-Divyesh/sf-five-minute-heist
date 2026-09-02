@@ -125,6 +125,7 @@ test("@claim:privacy-default the full demo sets no cookies and contacts no third
   await completeGame(page);
   expect(external).toEqual([]);
   expect(await page.context().cookies()).toEqual([]);
+  expect(await page.locator('form, iframe, input[type="email"], input[type="password"], [data-payment]').count()).toBe(0);
   expect(await page.locator('script[src^="http"], link[href^="http"]:not([rel="canonical"])').count()).toBe(0);
 });
 

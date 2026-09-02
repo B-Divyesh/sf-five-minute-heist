@@ -8,6 +8,7 @@
     "build": "tsc --noEmit && vite build",
     "preview": "vite preview --host 127.0.0.1",
     "test": "npm run test:unit && playwright test",
+    "test:live": "playwright test --config=playwright.live.config.ts",
     "test:unit": "vitest run tests/core.test.ts"
   },
   "devDependencies": {

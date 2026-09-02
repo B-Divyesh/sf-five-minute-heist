@@ -1,4 +1,6 @@
-# Independent verification — PASS
+# Independent verification — PASS (superseded)
+
+This report describes candidate `731cf94`. Its low-severity cache note was resolved in polish round 1; current evidence is in `.factory/polish-1.md`.
 
 **Candidate:** `731cf94d9f7038f62f432e34228a84f65a9fb47b`  
 **Live URL:** https://five-minute-heist.sociobot.in  
