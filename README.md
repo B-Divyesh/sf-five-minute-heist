@@ -2,7 +2,7 @@
 
 Plan five moves through one daily 5 × 5 museum. Two visible guard loops move after each step, and a valid plan reaches the exhibit.
 
-Five-Minute Heist is a free game for one browser player. Use arrow keys or the on-screen touch controls, run the plan, then copy a sealed result glyph. The sample works offline after the first visit. Daily progress stays in local browser storage.
+Five-Minute Heist is a free 4–6 minute game for one browser player. Use arrow keys or the on-screen touch controls, run the plan, then copy a sealed result glyph. The sample works offline after the first visit. Daily progress stays in local browser storage.
 
 ## Try the sample
 

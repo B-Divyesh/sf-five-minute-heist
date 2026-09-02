@@ -250,6 +250,46 @@ test("real routes, titles, focus, mobile Demo navigation, hashed caching, and th
   await expect(page.getByRole("link", { name: "Terms", exact: true })).toHaveAttribute("href", "/terms");
 });
 
+test("mobile links provide 44 by 44 CSS pixel targets on every public page", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ["/", "/?demo=1", "/demo", "/privacy", "/terms", "/not-a-real-page"]) {
+    await page.goto(route);
+    await page.evaluate(() => document.fonts.ready);
+    const links = await page.locator("a").evaluateAll((elements) => elements.map((element) => {
+      const bounds = element.getBoundingClientRect();
+      return { label: element.textContent?.trim() ?? "", width: bounds.width, height: bounds.height };
+    }));
+    for (const link of links) {
+      expect.soft(link.width, `${route} “${link.label}” width`).toBeGreaterThanOrEqual(44);
+      expect.soft(link.height, `${route} “${link.label}” height`).toBeGreaterThanOrEqual(44);
+    }
+  }
+});
+
+test("200 percent text at 390px keeps every public page and header link inside the viewport", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+  for (const route of ["/", "/?demo=1", "/demo", "/privacy", "/terms", "/not-a-real-page"]) {
+    await page.goto(route);
+    await page.evaluate(() => {
+      document.documentElement.style.fontSize = "200%";
+      return document.fonts.ready;
+    });
+    const layout = await page.evaluate(() => ({
+      clientWidth: document.documentElement.clientWidth,
+      scrollWidth: document.documentElement.scrollWidth,
+      links: [...document.querySelectorAll<HTMLAnchorElement>("header a")].map((link) => {
+        const bounds = link.getBoundingClientRect();
+        return { label: link.textContent?.trim() ?? "", left: bounds.left, right: bounds.right };
+      })
+    }));
+    expect(layout.scrollWidth, `${route} document width`).toBe(layout.clientWidth);
+    for (const link of layout.links) {
+      expect.soft(link.left, `${route} “${link.label}” left edge`).toBeGreaterThanOrEqual(0);
+      expect.soft(link.right, `${route} “${link.label}” right edge`).toBeLessThanOrEqual(layout.clientWidth);
+    }
+  }
+});
+
 test("all public pages pass the serious accessibility and console-error baseline", async ({ page }) => {
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(String(error)));
