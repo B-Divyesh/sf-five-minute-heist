@@ -1,72 +1,121 @@
 [
   {
+    "id": "sample-ready",
+    "claim": "Try it with sample data opens a ready gallery in one click, with the board in the first 390 pixels on a phone.",
+    "where": "landing first screen, demo",
+    "test": "npm test -- --grep @claim:sample-ready",
+    "sandbox": "fresh Chromium at 390x844; follow /?demo=1 action and assert banner, seed, loops, plan slots, and board top"
+  },
+  {
+    "id": "free-access",
+    "claim": "The game is free to play without an account.",
+    "where": "landing facts, terms, README",
+    "test": "npm test -- --grep @claim:free-access",
+    "sandbox": "fresh demo context; assert no account/payment gate and complete a scored run"
+  },
+  {
     "id": "complete-run",
     "claim": "A valid five-move plan reaches the end screen.",
     "where": "game, README",
     "test": "npm test -- --grep @claim:complete-run",
-    "sandbox": "fresh Chromium context at /demo; enter the generated valid plan and assert the escape result"
+    "sandbox": "fresh demo context; enter the generated valid plan by keyboard and assert the escape result"
   },
   {
     "id": "restart-reset",
     "claim": "Play again resets the plan.",
-    "where": "end screen",
+    "where": "end screen, README",
     "test": "npm test -- --grep @claim:restart-reset",
-    "sandbox": "complete /demo, choose Play again, and assert all five plan slots are empty"
+    "sandbox": "complete the demo, choose Play again, and assert all five plan slots are empty"
   },
   {
-    "id": "settings-persist",
-    "claim": "The sound choice stays in this browser.",
-    "where": "game, privacy page",
-    "test": "npm test -- --grep @claim:settings-persist",
-    "sandbox": "fresh /demo storage; turn sound on, reload, and assert the setting remains on"
+    "id": "local-progress-storage",
+    "claim": "The daily plan, attempts, best score, completed result, and sound choice stay in local browser storage until it is cleared.",
+    "where": "landing facts and privacy section, privacy page, README",
+    "test": "npm test -- --grep @claim:local-progress-storage",
+    "sandbox": "fresh daily namespace; enable sound, complete a run, inspect the sole saved record, reload, then clear and verify reset"
+  },
+  {
+    "id": "plan-preview",
+    "claim": "The board previews the player and guards after each queued move.",
+    "where": "game status, how it works",
+    "test": "npm test -- --grep @claim:plan-preview",
+    "sandbox": "fresh demo; queue one valid move and compare displayed player and guard cells with deterministic simulation"
+  },
+  {
+    "id": "visible-guard-loops",
+    "claim": "Both guard loops show six positions and match the generated board.",
+    "where": "game, how it works, README",
+    "test": "npm test -- --grep @claim:visible-guard-loops",
+    "sandbox": "fresh demo; compare each displayed six-position line to guardPosition output"
+  },
+  {
+    "id": "privacy-default",
+    "claim": "The game uses no account, tracking cookies, ads, analytics, or third-party runtime files.",
+    "where": "landing privacy section, privacy page, README",
+    "test": "npm test -- --grep @claim:privacy-default",
+    "sandbox": "fresh demo through a complete run; assert no account/payment UI, no cookies, no external scripts, and only same-origin requests"
+  },
+  {
+    "id": "demo-isolation",
+    "claim": "Demo writes use only the demo namespace; reset and exit remove them without changing daily data.",
+    "where": "demo banner, privacy page, README",
+    "test": "npm test -- --grep @claim:demo-isolation",
+    "sandbox": "seed a daily sentinel; write, reset, write, and exit demo; inspect every storage key after each action"
+  },
+  {
+    "id": "browser-generated",
+    "claim": "The browser generates and checks each gallery without downloading or shipping an answer list.",
+    "where": "landing privacy section, README",
+    "test": "npm test -- --grep @claim:browser-generated",
+    "sandbox": "fresh demo request log plus full dist text scan; assert no answer request and no sample solution sequence"
+  },
+  {
+    "id": "touch-controls",
+    "claim": "The on-screen controls support a complete touch playthrough.",
+    "where": "README",
+    "test": "npm test -- --grep @claim:touch-controls",
+    "sandbox": "fresh mobile context with touch enabled; tap five moves and Run the plan, then assert the end screen"
   },
   {
     "id": "offline-reload",
-    "claim": "Works offline after your first visit.",
+    "claim": "The sample works offline after the first visit.",
     "where": "landing facts, README",
     "test": "npm test -- --grep @claim:offline-reload",
-    "sandbox": "own browser context; visit /demo, wait for service worker control, go offline, reload, and assert the board loads"
-  },
-  {
-    "id": "local-only",
-    "claim": "The game loads its own files from this site.",
-    "where": "landing privacy section, privacy page, README",
-    "test": "npm test -- --grep @claim:local-only",
-    "sandbox": "fresh /demo context; record requests through a planning flow and assert every URL is same-origin"
+    "sandbox": "own fresh browser context; wait for service-worker control, go offline, reload, and assert the playable board"
   },
   {
     "id": "result-glyph",
     "claim": "A sealed glyph shares the result without directions.",
-    "where": "how it works, end screen",
+    "where": "how it works, end screen, README",
     "test": "npm test -- --grep @claim:result-glyph",
-    "sandbox": "complete /demo, copy the result, and assert five non-direction glyphs and no direction arrows"
+    "sandbox": "complete demo, copy result, and assert five allowed glyphs with no direction arrows"
+  },
+  {
+    "id": "solvable-generator",
+    "claim": "Every accepted daily board has a valid five-move solution.",
+    "where": "README",
+    "test": "npm test -- --grep @claim:solvable-generator",
+    "sandbox": "generate 31 dated boards and assert each has a winning five-move plan"
+  },
+  {
+    "id": "exhaustive-generator",
+    "claim": "The deterministic validator checks all 1,024 possible five-move routes before accepting a board.",
+    "where": "README",
+    "test": "npm test -- --grep @claim:exhaustive-generator",
+    "sandbox": "enumerate and deduplicate all 1,024 routes, compare filtered wins with findSolutions, and repeat a seed"
   },
   {
     "id": "frame-rate",
-    "claim": "The game targets 60 fps on a mid-range phone.",
+    "claim": "The game targets 60 fps on a mid-range phone, with a tested 50 fps floor.",
     "where": "README, handoff",
     "test": "npm test -- --grep @claim:frame-rate",
     "sandbox": "390x844 Chromium viewport; sample 60 animation frames and assert at least 50 fps"
   },
   {
-    "id": "answer-not-shipped",
-    "claim": "The daily answer is not embedded in page source.",
-    "where": "landing privacy section, README",
-    "test": "npm test -- --grep @claim:answer-not-shipped",
-    "sandbox": "fetch the initial HTML for /demo and assert the generated valid direction sequence is absent"
-  },
-  {
-    "id": "solvable-generator",
-    "claim": "Every generated daily board is solvable.",
-    "where": "README",
-    "test": "npm test -- --grep @claim:solvable-generator",
-    "sandbox": "generate 31 dated boards and assert each has a valid five-move solution"
-  },
-  {
-    "id": "demo-isolation",
-    "claim": "Reset demo clears only sample progress.",
-    "where": "demo banner, README",
-    "test": "npm test -- --grep @claim:demo-isolation",
-    "sandbox": "set a sentinel in the real namespace, reset /demo, and assert the real value is unchanged"
+    "id": "original-art-provenance",
+    "claim": "The museum scene was generated for this game and its prompt is recorded.",
+    "where": "footer, README",
+    "test": "npm test -- --grep @claim:original-art-provenance",
+    "sandbox": "fresh demo; assert the disclosure, prompt section, and project source prompt file"
   }
 ]

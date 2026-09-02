@@ -1,11 +1,9 @@
-const CACHE_NAME = "five-minute-heist-v1";
+const CACHE_NAME = "five-minute-heist-v2";
 const SHELL = [
   "/",
   "/demo",
   "/privacy",
   "/terms",
-  "/assets/app.js",
-  "/assets/style.css",
   "/fonts/space-grotesk.woff2",
   "/fonts/atkinson-regular.woff2",
   "/fonts/atkinson-bold.woff2",

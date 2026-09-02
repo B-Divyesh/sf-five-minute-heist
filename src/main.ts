@@ -37,9 +37,10 @@ type GameState = SavedGame & {
 const appElement = document.querySelector<HTMLDivElement>("#app");
 if (!appElement) throw new Error("The game could not start because its page container is missing.");
 const app: HTMLDivElement = appElement;
+const routeStatus = document.querySelector<HTMLDivElement>("#route-status");
 
 const DEMO_SEED = "sample-glass-gallery";
-const APP_VERSION = "1.0.0";
+const APP_VERSION = "1.1.0";
 const demoPrefix = "demo:five-minute-heist";
 const realPrefix = "five-minute-heist";
 let game: GameState | null = null;
@@ -126,7 +127,7 @@ function safeGame(): GameState | null {
 
 const routeCopy: Record<string, { title: string; description: string }> = {
   "/": {
-    title: "Five-Minute Heist — Plan a daily museum escape",
+    title: "Five-Minute Heist — Plan a daily museum heist",
     description: "Plan five moves around looping guards, then watch your daily museum heist unfold."
   },
   "/demo": {
@@ -156,8 +157,15 @@ function updateMetadata(route: string): void {
   const meta = routeCopy[route];
   document.title = meta.title;
   document.querySelector<HTMLMetaElement>('meta[name="description"]')?.setAttribute("content", meta.description);
+  document.querySelector<HTMLMetaElement>('meta[property="og:title"]')?.setAttribute("content", meta.title);
+  document.querySelector<HTMLMetaElement>('meta[property="og:description"]')?.setAttribute("content", meta.description);
+  document.querySelector<HTMLMetaElement>('meta[name="twitter:title"]')?.setAttribute("content", meta.title);
+  document.querySelector<HTMLMetaElement>('meta[name="twitter:description"]')?.setAttribute("content", meta.description);
   const canonical = document.querySelector<HTMLLinkElement>('link[rel="canonical"]');
-  if (canonical) canonical.href = `https://five-minute-heist.sociobot.in${route === "/" ? "/" : route}`;
+  const canonicalPath = route === "/404" ? location.pathname : route;
+  const canonicalUrl = `https://five-minute-heist.sociobot.in${canonicalPath === "/" ? "/" : canonicalPath}`;
+  if (canonical) canonical.href = canonicalUrl;
+  document.querySelector<HTMLMetaElement>('meta[property="og:url"]')?.setAttribute("content", canonicalUrl);
 }
 
 function header(route: string): string {
@@ -191,7 +199,7 @@ function demoBanner(): string {
   return `<aside class="demo-banner" aria-label="Demo mode">
     <span>Demo — sample data, nothing is saved to your daily game.</span>
     <button type="button" data-action="reset-demo">Reset demo</button>
-    <button type="button" data-action="start-real">Start for real</button>
+    <button type="button" data-action="start-real">Open today’s game</button>
   </aside>`;
 }
 
@@ -244,12 +252,12 @@ function boardMarkup(state: GameState): string {
       }
       guards.forEach((guard) => pieces.push(`<span class="piece guard" aria-hidden="true">G${guard.index + 1}</span>`));
       if (samePosition(position, boardState.player)) pieces.push('<span class="piece player" aria-hidden="true">YOU</span>');
-      cells.push(`<div class="${classes.join(" ")}" data-cell="${cellName(position)}">${pieces.join("")}</div>`);
+      cells.push(`<div class="${classes.join(" ")}" data-cell="${cellName(position)}" data-player="${samePosition(position, boardState.player)}" data-guards="${guards.map((guard) => guard.index + 1).join(",")}">${pieces.join("")}</div>`);
     }
   }
 
   const description = `Five by five gallery. You are in ${cellName(boardState.player)}. The exhibit is in ${cellName(state.puzzle.vault)}.${state.puzzle.bonus ? ` Take the seal in ${cellName(state.puzzle.bonus)} first.` : ""}`;
-  return `<div class="board" role="img" aria-label="${description}">${cells.join("")}</div>`;
+  return `<div class="board" role="img" data-turn="${boardState.turn}" aria-label="${description}">${cells.join("")}</div>`;
 }
 
 function guardKey(state: GameState): string {
@@ -292,17 +300,15 @@ function gameMarkup(state: GameState): string {
   }).join("");
   const disabled = state.phase !== "planning" && state.phase !== "failed";
   const dateLabel = isDemo() ? "Sample gallery" : new Date(`${state.seed}T12:00:00Z`).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric", timeZone: "UTC" });
+  const objectiveMarkup = `<p class="objective"><strong>Goal:</strong> ${objective}</p>`;
+  const statusMarkup = `<div class="status-line${statusClass(state)}" role="status" aria-live="polite">${state.message}</div>`;
+  const boardAndLoops = `<div class="board-wrap">${boardMarkup(state)}${guardKey(state)}</div>`;
   return `<section class="game-shell" id="game" aria-label="Five-move planning board">
     <div class="game-topline">
       <div><p class="game-title">${isDemo() ? "Practice gallery" : "Today’s gallery"}</p><span class="seed">${dateLabel} · seed ${state.seed}</span></div>
-      <button class="sound-button" type="button" data-action="toggle-sound" aria-pressed="${state.soundEnabled}">Sound ${state.soundEnabled ? "on" : "off"}</button>
+      <button class="sound-button" type="button" data-action="toggle-sound" aria-pressed="${state.soundEnabled}">Turn sound ${state.soundEnabled ? "off" : "on"}</button>
     </div>
-    <p class="objective"><strong>Goal:</strong> ${objective}</p>
-    <div class="status-line${statusClass(state)}" role="status" aria-live="polite">${state.message}</div>
-    <div class="board-wrap">
-      ${boardMarkup(state)}
-      ${guardKey(state)}
-    </div>
+    ${isDemo() ? `${boardAndLoops}${objectiveMarkup}${statusMarkup}` : `${objectiveMarkup}${statusMarkup}${boardAndLoops}`}
     <div class="plan-area">
       <div class="plan-label"><span>Your five moves</span><span>${plan.length}/${MOVE_COUNT}</span></div>
       <div class="plan-slots" aria-label="Planned moves">${slots}</div>
@@ -329,16 +335,16 @@ function landing(route: "/" | "/demo"): string {
   const demo = route === "/demo";
   return `${header(route)}${demoBanner()}${offlineBanner()}
     <main id="main">
-      <section class="hero">
+      <section class="hero${demo ? " demo-hero" : ""}">
         <div class="hero-layout">
           <div class="hero-copy">
             <p class="eyebrow">One gallery each day · five moves</p>
-            <h1 tabindex="-1">${demo ? "Plan this five-move museum heist" : "Plan a five-move museum heist"}</h1>
+            <h1 tabindex="-1">${demo ? "Plan the sample museum heist" : "Plan a five-move museum heist"}</h1>
             <p class="hero-intro">For solo players who want a short daily puzzle without another word game.</p>
             ${demo
-              ? '<a class="primary-action" href="#game">Play the sample below</a><p class="action-note">The sample has its own progress and can be reset.</p>'
-              : '<a class="primary-action" href="/demo" data-route>Try it with sample data</a><p class="action-note">A practice gallery opens with a ready puzzle.</p>'}
-            <ul class="facts"><li>Free to play.</li><li>Works offline after your first visit.</li><li>Progress stays in this browser.</li></ul>
+              ? '<p class="demo-intro">The ready sample has its own progress. Reset it at any time.</p>'
+              : '<a class="primary-action" href="/?demo=1" data-route>Try it with sample data</a><p class="action-note">Open a ready practice gallery.</p>'}
+            <ul class="facts"><li>Free to play.</li><li>The sample works offline after your first visit.</li><li>Progress stays in this browser.</li></ul>
           </div>
           ${state ? gameMarkup(state) : gameErrorMarkup()}
         </div>
@@ -382,7 +388,7 @@ function termsPage(): string {
 }
 
 function notFoundPage(): string {
-  return `${header("/404")}<main id="main" class="text-page not-found"><article><p class="eyebrow">404</p><h1 tabindex="-1">This room is not in the gallery</h1><p>The page may have moved. Today’s heist is still ready.</p><a class="primary-action" href="/" data-route>Return to today’s game</a></article></main>${footer()}`;
+  return `${header("/404")}<main id="main" class="text-page not-found"><article><p class="eyebrow">404</p><h1 tabindex="-1">Page not found</h1><p>This room is not in the gallery. Today’s heist is still ready.</p><a class="primary-action" href="/" data-route>Return to today’s game</a></article></main>${footer()}`;
 }
 
 function render(focusHeading = false): void {
@@ -393,12 +399,17 @@ function render(focusHeading = false): void {
   else if (route === "/privacy") app.innerHTML = privacyPage();
   else if (route === "/terms") app.innerHTML = termsPage();
   else app.innerHTML = notFoundPage();
-  if (focusHeading) requestAnimationFrame(() => app.querySelector<HTMLElement>("h1")?.focus());
+  if (focusHeading) requestAnimationFrame(() => {
+    const heading = app.querySelector<HTMLElement>("h1");
+    heading?.focus();
+    if (routeStatus && heading) routeStatus.textContent = `${heading.textContent ?? "Page"} loaded`;
+  });
 }
 
 function navigate(path: string): void {
   cancelAnimationFrame(animationFrame);
-  history.pushState({}, "", path);
+  const destination = new URL(path, location.href);
+  history.pushState({}, "", `${destination.pathname}${destination.search}${destination.hash}`);
   game = null;
   scrollTo({ top: 0, behavior: "auto" });
   render(true);
@@ -567,7 +578,8 @@ app.addEventListener("click", (event) => {
   if (!target) return;
   if (target.matches("a[data-route]")) {
     event.preventDefault();
-    navigate((target as HTMLAnchorElement).pathname);
+    const link = target as HTMLAnchorElement;
+    navigate(`${link.pathname}${link.search}${link.hash}`);
     return;
   }
   const direction = target.dataset.direction as Direction | undefined;
@@ -579,7 +591,12 @@ app.addEventListener("click", (event) => {
   if (action === "toggle-sound") toggleSound();
   if (action === "play-again") playAgain();
   if (action === "copy-result") void copyResult();
-  if (action === "reset-demo") { clearDemo(); game = makeGame(); render(); }
+  if (action === "reset-demo") {
+    clearDemo();
+    game = makeGame();
+    render();
+    document.querySelector<HTMLElement>("[data-action='reset-demo']")?.focus();
+  }
   if (action === "start-real") { clearDemo(); navigate("/"); }
   if (action === "reload") location.reload();
 });

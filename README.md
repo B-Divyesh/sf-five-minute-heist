@@ -1,28 +1,26 @@
 # Five-Minute Heist
 
-Plan five moves through one daily 5 × 5 museum. Guards follow visible loops, and a valid plan reaches the exhibit end screen.
+Plan five moves through one daily 5 × 5 museum. Two visible guard loops move after each step, and a valid plan reaches the exhibit.
 
-Five-Minute Heist is for one browser player. A round takes about 4–6 minutes. Use the keyboard or touch controls, run the plan, then copy a sealed result glyph.
-
-The game is free. It works offline after the first visit. Progress and the sound choice stay in local browser storage. The game loads its own files from this site.
+Five-Minute Heist is a free game for one browser player. Use arrow keys or the on-screen touch controls, run the plan, then copy a sealed result glyph. The sample works offline after the first visit. Daily progress stays in local browser storage.
 
 ## Try the sample
 
-Open `/demo` or visit:
+Choose **Try it with sample data** on the first screen, or visit:
 
-https://five-minute-heist.sociobot.in/demo
+https://five-minute-heist.sociobot.in/?demo=1
 
-The sample uses the separate `demo:five-minute-heist:` storage namespace. **Reset demo** clears only sample progress. **Start for real** clears the sample and opens today’s game.
+The ready sample uses only the `demo:five-minute-heist:` storage namespace. **Reset demo** removes sample progress. **Open today’s game** also removes sample progress before leaving. Neither action changes daily data.
 
 ## Play
 
-- Study the two six-step guard previews.
-- Add exactly five moves with arrow keys or the on-screen buttons.
+- Study the two visible six-position guard loops.
+- Add exactly five moves with arrow keys or the on-screen controls.
 - Press Enter or choose **Run the plan**.
-- Reach the exhibit after taking the seal when one is shown.
-- Choose **Play again** to reset the plan.
+- Reach the exhibit after taking the seal when one appears.
+- Choose **Play again** to clear the plan.
 
-The date creates the seed. The deterministic generator tests every possible five-move route before accepting a board. The daily answer is not embedded in HTML or stored as a shipped answer list.
+The date creates a deterministic seed. Before accepting a board, the browser checks all 1,024 possible five-move routes and keeps a solvable one. It does not download or ship an answer list.
 
 ## Develop
 
@@ -33,7 +31,7 @@ npm install
 npm run dev
 ```
 
-Open `http://localhost:5173`. Use `http://localhost:5173/demo` for the clean sample.
+Open `http://localhost:5173`. Use `http://localhost:5173/?demo=1` for the isolated sample.
 
 ## Test
 
@@ -44,20 +42,21 @@ npm test
 npm run build
 ```
 
-`npm test` runs deterministic core checks and the browser claim suite. The browser suite includes a 390 × 844 viewport and a measured 50 fps floor for the 60 fps target.
+`npm test` runs four deterministic core tests and the browser claim suite through the Azure Static Web Apps emulator. The suite verifies real HTTP routing, a 390 × 844 layout, accessibility, privacy, offline reload, and a measured 50 fps floor.
+
+Each command in [.factory/claims.json](.factory/claims.json) runs one observable claim test from the sample entry point.
 
 ## Deploy
 
-The exact build command is:
-
 ```sh
 npm run build
+/opt/fleet/lib/deploy-static.sh five-minute-heist dist
 ```
 
-It writes the static site to `dist/`, with `dist/index.html` at the root. Deploy that directory to any static host with SPA fallback support. `staticwebapp.config.json` provides Azure Static Web Apps routing, security headers, and the designed 404 response.
+The build writes hashed JavaScript and CSS to `dist/`. `staticwebapp.config.json` gives those assets immutable caching, rewrites only known app routes, and serves the designed 404 with HTTP 404.
 
 ## Privacy and license
 
-There are no accounts, ads, analytics, third-party runtime scripts, or tracking cookies. See `/privacy` and `/terms` in the built site.
+The game uses no account, tracking cookies, ads, analytics, or third-party runtime files. See [/privacy](https://five-minute-heist.sociobot.in/privacy) and [/terms](https://five-minute-heist.sociobot.in/terms).
 
-The code is available under the [MIT License](LICENSE). The original generated scene and prompt provenance are recorded in `.factory/design.md` and `assets/src/`.
+The code is available under the [MIT License](LICENSE). The generated museum scene was made for this game; its prompt and provenance are in [.factory/design.md](.factory/design.md) and `assets/src/`.

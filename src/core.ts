@@ -166,11 +166,15 @@ export function simulatePlan(puzzle: Puzzle, plan: Direction[]): PlanResult {
 }
 
 export function findSolutions(puzzle: Puzzle): Direction[][] {
+  return enumeratePlans().filter((plan) => simulatePlan(puzzle, plan).won);
+}
+
+export function enumeratePlans(): Direction[][] {
   const directions: Direction[] = ["U", "R", "D", "L"];
   const results: Direction[][] = [];
   const visit = (plan: Direction[]) => {
     if (plan.length === MOVE_COUNT) {
-      if (simulatePlan(puzzle, plan).won) results.push(plan);
+      results.push(plan);
       return;
     }
     directions.forEach((direction) => visit([...plan, direction]));

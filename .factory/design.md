@@ -35,7 +35,7 @@ Text contrast is at least 4.5:1. Color never carries game state alone; every til
 
 The opening screen uses an asymmetric split. Copy occupies a narrow left column while the daily board overlaps the luminous museum scene on the right. Glass panes use clipped corners instead of rounded default cards. Fine grid lines evoke floor plans. Buttons are short rectangular tabs with one cut corner.
 
-On phones, the scene becomes a shallow backdrop and the board stacks below the short introduction. Secondary explanation moves below the playable board so the game appears in the first captured screen.
+On phones, the scene becomes a shallow backdrop and the board stacks below the short introduction. The demo compresses its title and puts the board before the goal details, so the playable grid begins within the first 390 vertical pixels. Secondary explanation remains below the game.
 
 ## Interaction grammar
 

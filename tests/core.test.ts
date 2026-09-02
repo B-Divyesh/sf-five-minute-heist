@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { findSolutions, generatePuzzle, pathGlyph, simulatePlan } from "../src/core";
+import { enumeratePlans, findSolutions, generatePuzzle, pathGlyph, simulatePlan } from "../src/core";
 
 describe("daily puzzle generator", () => {
   it("is deterministic and always produces a valid five-move plan", () => {
@@ -23,5 +23,12 @@ describe("daily puzzle generator", () => {
   it("creates a sealed five-symbol result", () => {
     expect(pathGlyph(["U", "R", "D", "L", "U"], "demo-gallery")).toHaveLength(5);
     expect(pathGlyph(["U", "R", "D", "L", "U"], "demo-gallery")).not.toContain("↑");
+  });
+
+  it("enumerates every possible five-move route", () => {
+    const plans = enumeratePlans();
+    expect(plans).toHaveLength(4 ** 5);
+    expect(new Set(plans.map((plan) => plan.join(""))).size).toBe(4 ** 5);
+    expect(plans.every((plan) => plan.length === 5)).toBe(true);
   });
 });
