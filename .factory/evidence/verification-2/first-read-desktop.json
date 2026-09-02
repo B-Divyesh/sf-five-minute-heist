@@ -1,0 +1,200 @@
+{
+  "name": "desktop",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "status": 200,
+  "finalUrl": "https://five-minute-heist.sociobot.in/",
+  "viewportData": {
+    "title": "Five-Minute Heist — Plan a daily museum heist",
+    "lang": "en",
+    "h1": [
+      "Plan a five-move museum heist"
+    ],
+    "mainCount": 1,
+    "interactive": [
+      {
+        "tag": "A",
+        "text": "Five-Minute Heist",
+        "rect": {
+          "x": 57.59375,
+          "y": 9.5,
+          "width": 176,
+          "height": 44,
+          "top": 9.5,
+          "right": 233.59375,
+          "bottom": 53.5,
+          "left": 57.59375
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Daily",
+        "rect": {
+          "x": 1224.40625,
+          "y": 20.09375,
+          "width": 32,
+          "height": 22.796875,
+          "top": 20.09375,
+          "right": 1256.40625,
+          "bottom": 42.890625,
+          "left": 1224.40625
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Demo",
+        "rect": {
+          "x": 1276.40625,
+          "y": 20.09375,
+          "width": 39,
+          "height": 22.796875,
+          "top": 20.09375,
+          "right": 1315.40625,
+          "bottom": 42.890625,
+          "left": 1276.40625
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Privacy",
+        "rect": {
+          "x": 1335.40625,
+          "y": 20.09375,
+          "width": 47,
+          "height": 22.796875,
+          "top": 20.09375,
+          "right": 1382.40625,
+          "bottom": 42.890625,
+          "left": 1335.40625
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Try it with sample data",
+        "rect": {
+          "x": 60,
+          "y": 691.09375,
+          "width": 216,
+          "height": 48,
+          "top": 691.09375,
+          "right": 276,
+          "bottom": 739.09375,
+          "left": 60
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Turn sound on",
+        "rect": {
+          "x": 1128.265625,
+          "y": 189,
+          "width": 114,
+          "height": 44,
+          "top": 189,
+          "right": 1242.265625,
+          "bottom": 233,
+          "left": 1128.265625
+        }
+      }
+    ],
+    "firstScreenText": [
+      "Daily",
+      "Demo",
+      "Privacy",
+      "One gallery each day · five moves",
+      "Plan a five-move museum heist",
+      "For solo players who want a short daily puzzle without another word game.",
+      "Try it with sample data",
+      "Open a ready practice gallery.",
+      "Free to play.",
+      "The sample works offline after your first visit.",
+      "Progress stays in this browser.",
+      "Today’s gallery",
+      "Sep 2, 2026 · seed 2026-09-02",
+      "Turn sound on",
+      "Goal:",
+      "Add five moves. The board previews the guards after each move.",
+      "G2",
+      "G1",
+      "+",
+      "ART",
+      "YOU",
+      "Guard 1 loop",
+      "B3 → C3 → C4 → B4 → B3 → C3",
+      "Guard 2 loop",
+      "B1 → C1 → C2 → B2 → B1 → C1",
+      "Your five moves",
+      "0/5",
+      "1",
+      "2",
+      "3",
+      "4",
+      "5"
+    ]
+  },
+  "visibleText": "Skip to game\nFive-Minute Heist\nDaily\nDemo\nPrivacy\n\nONE GALLERY EACH DAY · FIVE MOVES\n\nPlan a five-move museum heist\n\nFor solo players who want a short daily puzzle without another word game.\n\nTry it with sample data\n\nOpen a ready practice gallery.\n\nFree to play.\nThe sample works offline after your first visit.\nProgress stays in this browser.\n\nToday’s gallery\n\nSep 2, 2026 · seed 2026-09-02\nTurn sound on\n\nGoal: Reach the exhibit in C4 after taking the seal in E3.\n\nAdd five moves. The board previews the guards after each move.\nG2\nG1\n+\nART\nYOU\nGuard 1 loop\nB3 → C3 → C4 → B4 → B3 → C3\nGuard 2 loop\nB1 → C1 → C2 → B2 → B1 → C1\nYour five moves\n0/5\n1\n2\n3\n4\n5\n↑\n→\n↓\n←\nRemove last move\nRun the plan\nHow the daily heist works\nStudy both guard loops\n\nEach line shows where that guard stands after every move.\n\nQueue five moves\n\nUse the arrow buttons or arrow keys. The board previews each step.\n\nRun and share\n\nWatch the plan play. A sealed glyph shares the result without directions.\n\nWhat the game does not do\n\nIt does not use accounts, tracking cookies, ads, or paid hints.\n\nYour plan, result, and sound choice stay in local browser storage. Demo progress uses a separate sample key.\n\nThe daily generator sends no answer. It builds and checks the gallery in your browser.\n\nFive-Minute Heist — Plan five moves through one daily museum.\nOriginal generated scene made for this game. Version 1.1.0.\nPrivacy\nTerms\nBuilt by Param Factory\n(opens in a new tab)",
+  "requests": [
+    {
+      "method": "GET",
+      "url": "https://five-minute-heist.sociobot.in/",
+      "resourceType": "document"
+    },
+    {
+      "method": "GET",
+      "url": "https://five-minute-heist.sociobot.in/fonts/space-grotesk.woff2",
+      "resourceType": "font"
+    },
+    {
+      "method": "GET",
+      "url": "https://five-minute-heist.sociobot.in/fonts/atkinson-regular.woff2",
+      "resourceType": "font"
+    },
+    {
+      "method": "GET",
+      "url": "https://five-minute-heist.sociobot.in/assets/index-DrVNFsq1.js",
+      "resourceType": "script"
+    },
+    {
+      "method": "GET",
+      "url": "https://five-minute-heist.sociobot.in/assets/index-BJa9ZHv0.css",
+      "resourceType": "stylesheet"
+    },
+    {
+      "method": "GET",
+      "url": "https://five-minute-heist.sociobot.in/art/museum-night-768.webp",
+      "resourceType": "image"
+    },
+    {
+      "method": "GET",
+      "url": "https://five-minute-heist.sociobot.in/fonts/atkinson-bold.woff2",
+      "resourceType": "font"
+    }
+  ],
+  "responses": [
+    {
+      "url": "https://five-minute-heist.sociobot.in/",
+      "status": 200,
+      "headers": {
+        "cache-control": "public, must-revalidate, max-age=30",
+        "content-encoding": "br",
+        "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; worker-src 'self'",
+        "content-type": "text/html",
+        "date": "Wed, 02 Sep 2026 04:44:30 GMT",
+        "etag": "\"73991598\"",
+        "last-modified": "Wed, 02 Sep 2026 04:24:02 GMT",
+        "permissions-policy": "camera=(), microphone=(), geolocation=()",
+        "referrer-policy": "strict-origin-when-cross-origin",
+        "strict-transport-security": "max-age=10886400; includeSubDomains; preload",
+        "vary": "Accept-Encoding",
+        "x-content-type-options": "nosniff",
+        "x-dns-prefetch-control": "off",
+        "x-xss-protection": "1; mode=block"
+      }
+    }
+  ],
+  "consoleMessages": [],
+  "pageErrors": [],
+  "cookies": []
+}

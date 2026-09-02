@@ -1,0 +1,692 @@
+{
+  "checks": [
+    {
+      "name": "live demo returns 200",
+      "ok": true,
+      "evidence": 200
+    },
+    {
+      "name": "mobile first 390px shows the game board",
+      "ok": true,
+      "evidence": {
+        "x": 21,
+        "y": 363.625,
+        "width": 348,
+        "height": 348
+      }
+    },
+    {
+      "name": "empty plan cannot run",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "all visible mobile controls are at least 44x44 CSS px",
+      "ok": false,
+      "evidence": [
+        {
+          "text": "Daily",
+          "x": 241,
+          "y": 8,
+          "width": 29,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Demo",
+          "x": 282,
+          "y": 8,
+          "width": 37,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Privacy",
+          "x": 331,
+          "y": 8,
+          "width": 43,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Terms",
+          "x": 81,
+          "y": 2368.109375,
+          "width": 40,
+          "height": 44,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "sixth move is ignored at five-move boundary",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "direction controls disable at five moves",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "failed plan remains editable",
+      "ok": true,
+      "evidence": "Move 1 hit a wall. Remove moves and try another route."
+    },
+    {
+      "name": "Backspace recovers from a failed run",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "invalid plan can be cleared to empty",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "sound choice persists across reload",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "paused plan does not advance",
+      "ok": true,
+      "evidence": "0"
+    },
+    {
+      "name": "end screen shows a score",
+      "ok": true,
+      "evidence": "900 points"
+    },
+    {
+      "name": "end screen shows a sealed five-glyph result",
+      "ok": true,
+      "evidence": "◆△✦△◆"
+    },
+    {
+      "name": "copied share text hides directions",
+      "ok": true,
+      "evidence": "Five-Minute Heist sample\n◆△✦△◆\n900 points · 2 attempts\nhttps://five-minute-heist.sociobot.in"
+    },
+    {
+      "name": "demo uses only demo storage namespace",
+      "ok": true,
+      "evidence": [
+        "demo:five-minute-heist:progress:sample-glass-gallery"
+      ]
+    },
+    {
+      "name": "Play again resets the plan",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "Play again places focus on a direction control",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "touch controls reach the end screen",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "measured frame rate meets 50 fps floor",
+      "ok": true,
+      "evidence": 56.90047589488928
+    },
+    {
+      "name": "service worker controls the page after update",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "offline reload reports ready state",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "offline reload keeps the board playable",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "complete run makes only same-origin requests",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "complete run sets no cookies",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "complete mobile run has no console errors",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "complete mobile run has no page errors",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "first Tab reveals the skip link",
+      "ok": true,
+      "evidence": {
+        "tag": "A",
+        "text": "Skip to game",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 8,
+          "y": 8,
+          "width": 128,
+          "height": 45.5
+        }
+      }
+    },
+    {
+      "name": "keyboard focus is visibly outlined",
+      "ok": true,
+      "evidence": [
+        {
+          "tag": "A",
+          "text": "Skip to game",
+          "outline": "rgb(255, 209, 102) solid 3px",
+          "rect": {
+            "x": 8,
+            "y": 8,
+            "width": 128,
+            "height": 45.5
+          }
+        },
+        {
+          "tag": "A",
+          "text": "Five-Minute Heist",
+          "outline": "rgb(255, 209, 102) solid 3px",
+          "rect": {
+            "x": 57.59375,
+            "y": 9.5,
+            "width": 176,
+            "height": 44
+          }
+        },
+        {
+          "tag": "A",
+          "text": "Daily",
+          "outline": "rgb(255, 209, 102) solid 3px",
+          "rect": {
+            "x": 1224.40625,
+            "y": 20.09375,
+            "width": 32,
+            "height": 22.796875
+          }
+        },
+        {
+          "tag": "A",
+          "text": "Demo",
+          "outline": "rgb(255, 209, 102) solid 3px",
+          "rect": {
+            "x": 1276.40625,
+            "y": 20.09375,
+            "width": 39,
+            "height": 22.796875
+          }
+        },
+        {
+          "tag": "A",
+          "text": "Privacy",
+          "outline": "rgb(255, 209, 102) solid 3px",
+          "rect": {
+            "x": 1335.40625,
+            "y": 20.09375,
+            "width": 47,
+            "height": 22.796875
+          }
+        },
+        {
+          "tag": "A",
+          "text": "Try it with sample data",
+          "outline": "rgb(255, 209, 102) solid 3px",
+          "rect": {
+            "x": 60,
+            "y": 691.09375,
+            "width": 216,
+            "height": 48
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "text": "Turn sound on",
+          "outline": "rgb(255, 209, 102) solid 3px",
+          "rect": {
+            "x": 1128.265625,
+            "y": 189,
+            "width": 114,
+            "height": 44
+          }
+        },
+        {
+          "tag": "BUTTON",
+          "text": "↑",
+          "outline": "rgb(255, 209, 102) solid 3px",
+          "rect": {
+            "x": 610.265625,
+            "y": 934.109375,
+            "width": 152,
+            "height": 44
+          }
+        }
+      ]
+    },
+    {
+      "name": "200% text resize has no horizontal loss",
+      "ok": false,
+      "evidence": {
+        "scrollWidth": 399,
+        "clientWidth": 390,
+        "h1Visible": true,
+        "gameVisible": true,
+        "overflowers": [
+          {
+            "tag": "NAV",
+            "classes": "site-nav",
+            "text": "Daily\n      Demo\n      Privacy",
+            "left": 155,
+            "right": 399,
+            "width": 244
+          },
+          {
+            "tag": "A",
+            "classes": "",
+            "text": "Privacy",
+            "left": 312,
+            "right": 399,
+            "width": 87
+          }
+        ]
+      }
+    },
+    {
+      "name": "axe serious/critical: /",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "one h1 and main landmark: /",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "axe serious/critical: /?demo=1",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "one h1 and main landmark: /?demo=1",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "axe serious/critical: /demo",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "one h1 and main landmark: /demo",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "axe serious/critical: /privacy",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "one h1 and main landmark: /privacy",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "axe serious/critical: /terms",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "one h1 and main landmark: /terms",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "axe serious/critical: /not-a-real-page",
+      "ok": true,
+      "evidence": []
+    },
+    {
+      "name": "one h1 and main landmark: /not-a-real-page",
+      "ok": true,
+      "evidence": null
+    },
+    {
+      "name": "unknown live route returns HTTP 404",
+      "ok": true,
+      "evidence": 404
+    },
+    {
+      "name": "public routes have no unexpected console/page errors",
+      "ok": true,
+      "evidence": {
+        "unexpectedErrors": [],
+        "expected404NavigationErrors": 1
+      }
+    },
+    {
+      "name": "reduced-motion preference is applied",
+      "ok": true,
+      "evidence": {
+        "preference": true,
+        "heroAnimation": "1e-05s",
+        "htmlScroll": "auto"
+      }
+    },
+    {
+      "name": "reduced-motion run reaches the end screen",
+      "ok": true,
+      "evidence": null
+    }
+  ],
+  "observations": {
+    "mobileRun": {
+      "failureText": "Move 1 hit a wall. Remove moves and try another route.",
+      "score": "900 points",
+      "glyph": "◆△✦△◆",
+      "fps": 56.90047589488928,
+      "requestCount": 21,
+      "uniqueRequests": [
+        "https://five-minute-heist.sociobot.in/?demo=1",
+        "https://five-minute-heist.sociobot.in/fonts/space-grotesk.woff2",
+        "https://five-minute-heist.sociobot.in/fonts/atkinson-regular.woff2",
+        "https://five-minute-heist.sociobot.in/assets/index-DrVNFsq1.js",
+        "https://five-minute-heist.sociobot.in/assets/index-BJa9ZHv0.css",
+        "https://five-minute-heist.sociobot.in/art/museum-night-768.webp",
+        "https://five-minute-heist.sociobot.in/fonts/atkinson-bold.woff2"
+      ],
+      "responseHeaders": {
+        "/": {
+          "status": 200,
+          "headers": {
+            "cache-control": "public, must-revalidate, max-age=30",
+            "content-encoding": "br",
+            "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; worker-src 'self'",
+            "content-type": "text/html",
+            "date": "Wed, 02 Sep 2026 04:55:23 GMT",
+            "etag": "\"73991598\"",
+            "last-modified": "Wed, 02 Sep 2026 04:24:02 GMT",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "vary": "Accept-Encoding",
+            "x-content-type-options": "nosniff",
+            "x-dns-prefetch-control": "off",
+            "x-xss-protection": "1; mode=block"
+          }
+        },
+        "/assets/index-BJa9ZHv0.css": {
+          "status": 200,
+          "headers": {
+            "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; worker-src 'self'",
+            "cache-control": "public, max-age=31536000, immutable",
+            "x-dns-prefetch-control": "off",
+            "content-encoding": "br",
+            "etag": "\"73991598\"",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "x-content-type-options": "nosniff",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()",
+            "date": "Wed, 02 Sep 2026 04:55:21 GMT",
+            "x-xss-protection": "1; mode=block",
+            "content-type": "text/css",
+            "last-modified": "Wed, 02 Sep 2026 04:24:02 GMT",
+            "vary": "Accept-Encoding"
+          }
+        },
+        "/assets/index-DrVNFsq1.js": {
+          "status": 200,
+          "headers": {
+            "content-security-policy": "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; font-src 'self'; connect-src 'self'; media-src 'none'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; worker-src 'self'",
+            "cache-control": "public, max-age=31536000, immutable",
+            "x-dns-prefetch-control": "off",
+            "content-encoding": "br",
+            "etag": "\"73991598\"",
+            "referrer-policy": "strict-origin-when-cross-origin",
+            "x-content-type-options": "nosniff",
+            "permissions-policy": "camera=(), microphone=(), geolocation=()",
+            "date": "Wed, 02 Sep 2026 04:55:20 GMT",
+            "x-xss-protection": "1; mode=block",
+            "content-type": "text/javascript",
+            "last-modified": "Wed, 02 Sep 2026 04:24:02 GMT",
+            "vary": "Accept-Encoding"
+          }
+        }
+      },
+      "smallTargets": [
+        {
+          "text": "Daily",
+          "x": 241,
+          "y": 8,
+          "width": 29,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Demo",
+          "x": 282,
+          "y": 8,
+          "width": 37,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Privacy",
+          "x": 331,
+          "y": 8,
+          "width": 43,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Terms",
+          "x": 81,
+          "y": 2368.109375,
+          "width": 40,
+          "height": 44,
+          "visible": true
+        }
+      ]
+    },
+    "focusSequence": [
+      {
+        "tag": "A",
+        "text": "Skip to game",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 8,
+          "y": 8,
+          "width": 128,
+          "height": 45.5
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Five-Minute Heist",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 57.59375,
+          "y": 9.5,
+          "width": 176,
+          "height": 44
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Daily",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 1224.40625,
+          "y": 20.09375,
+          "width": 32,
+          "height": 22.796875
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Demo",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 1276.40625,
+          "y": 20.09375,
+          "width": 39,
+          "height": 22.796875
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Privacy",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 1335.40625,
+          "y": 20.09375,
+          "width": 47,
+          "height": 22.796875
+        }
+      },
+      {
+        "tag": "A",
+        "text": "Try it with sample data",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 60,
+          "y": 691.09375,
+          "width": 216,
+          "height": 48
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "Turn sound on",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 1128.265625,
+          "y": 189,
+          "width": 114,
+          "height": 44
+        }
+      },
+      {
+        "tag": "BUTTON",
+        "text": "↑",
+        "outline": "rgb(255, 209, 102) solid 3px",
+        "rect": {
+          "x": 610.265625,
+          "y": 934.109375,
+          "width": 152,
+          "height": 44
+        }
+      }
+    ],
+    "textResize": {
+      "scrollWidth": 399,
+      "clientWidth": 390,
+      "h1Visible": true,
+      "gameVisible": true,
+      "overflowers": [
+        {
+          "tag": "NAV",
+          "classes": "site-nav",
+          "text": "Daily\n      Demo\n      Privacy",
+          "left": 155,
+          "right": 399,
+          "width": 244
+        },
+        {
+          "tag": "A",
+          "classes": "",
+          "text": "Privacy",
+          "left": 312,
+          "right": 399,
+          "width": 87
+        }
+      ]
+    },
+    "reducedMotion": {
+      "preference": true,
+      "heroAnimation": "1e-05s",
+      "htmlScroll": "auto"
+    }
+  },
+  "failures": [
+    {
+      "name": "all visible mobile controls are at least 44x44 CSS px",
+      "evidence": [
+        {
+          "text": "Daily",
+          "x": 241,
+          "y": 8,
+          "width": 29,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Demo",
+          "x": 282,
+          "y": 8,
+          "width": 37,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Privacy",
+          "x": 331,
+          "y": 8,
+          "width": 43,
+          "height": 44,
+          "visible": true
+        },
+        {
+          "text": "Terms",
+          "x": 81,
+          "y": 2368.109375,
+          "width": 40,
+          "height": 44,
+          "visible": true
+        }
+      ]
+    },
+    {
+      "name": "200% text resize has no horizontal loss",
+      "evidence": {
+        "scrollWidth": 399,
+        "clientWidth": 390,
+        "h1Visible": true,
+        "gameVisible": true,
+        "overflowers": [
+          {
+            "tag": "NAV",
+            "classes": "site-nav",
+            "text": "Daily\n      Demo\n      Privacy",
+            "left": 155,
+            "right": 399,
+            "width": 244
+          },
+          {
+            "tag": "A",
+            "classes": "",
+            "text": "Privacy",
+            "left": 312,
+            "right": 399,
+            "width": 87
+          }
+        ]
+      }
+    }
+  ],
+  "warnings": []
+}

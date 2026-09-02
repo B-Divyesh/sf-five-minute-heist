@@ -1,65 +1,54 @@
-# Five-Minute Heist polish 1 handoff
+# Five-Minute Heist verification 2 handoff — FAIL
 
 ## Result
 
-Perfection-loop round 1 is complete. Every item in `.factory/review-1.md`, including all minor and earlier cache findings, is fixed and verified on https://five-minute-heist.sociobot.in.
+Candidate `134f14d40121b807070534ce394f97f80cef3ce7` at https://five-minute-heist.sociobot.in is **not accepted**.
 
-The deployed product remains a static TypeScript browser game with its luminous glass museum identity. No backend, account, payment, analytics, or AI dependency was added.
+The game itself works end to end and all automated gates pass, but independent manual accessibility QA found two release-blocking defects:
 
-## What changed
+1. At 390 × 844, the Daily, Demo, Privacy, and footer Terms links are only 29–43 px wide. The required target size is 44 × 44 CSS px.
+2. At 200% text sizing on a 390 px viewport, the header navigation reaches x=399 and clips the right edge of Privacy by 9 px.
 
-- The first action opens the isolated `/?demo=1` sample in one click.
-- The persistent demo banner resets sample state or opens today’s game without touching daily data.
-- At 390 × 844, the actual 5 × 5 board begins near 305 px, inside the first 390 vertical pixels.
-- Mobile navigation keeps Daily, Demo, and Privacy visible.
-- Sound and demo-exit buttons now state their result.
-- Vite emits hashed JS/CSS and Azure serves `/assets/*` for one year with `immutable`.
-- Known SPA routes are explicit; unknown URLs return the designed page with HTTP 404 and the literal H1 “Page not found”.
-- Route titles, descriptions, canonical/OG metadata, History API behavior, focus transfer, and live announcements are covered.
-- The claim registry now has 17 unique claims with exactly one observable browser test each.
-- The generator’s exhaustive 1,024-route enumeration is explicit and unit tested.
-- README, demo notes, design notes, catalog description, and copy audit match the repaired product.
+The full report and exact evidence are in [verification-2.md](verification-2.md). No product code or deployment was changed.
 
-The complete finding-by-finding map is in [polish-1.md](polish-1.md).
+## What passed
 
-## Verification
+- Mandatory cold first read and one-click isolated sample.
+- All 17 commands in `.factory/claims.json`, run separately after `npm ci`.
+- `npm test`: 4 unit tests and 19 Chromium tests.
+- `npm run build`: TypeScript check and Vite build; `dist/` produced.
+- `npm run test:live`: 19/19 live tests.
+- `npm audit --audit-level=high`: 0 vulnerabilities.
+- Byte-for-byte live/candidate match for HTML, hashed JS/CSS, service worker, 404, manifest, representative art, and font.
+- Scripted invalid run, recovery, pause/resume, keyboard win, touch win, real end screen, copy result, restart, and persistence.
+- Offline service-worker update/reload, same-origin-only requests, no cookies, security headers, routes, and caching.
+- Axe serious/critical: 0 on every public route and 404.
+- Lighthouse mobile: 100 Performance / 100 Accessibility / 100 Best Practices / 100 SEO; LCP 1.664 s, CLS 0.0082, TBT 47 ms.
+- Frame sample: 56.9 fps in the final independent 390 × 844 run; 50 fps floor passed.
 
-Repair commit `b3545f7` was pushed to `origin/main` and deployed with the factory static deployment script. Azure deployment `5fa16675-7a4d-497b-8ce9-ec5afc550703` succeeded.
+## Defects by severity
 
-- Clean clone `/tmp/five-minute-heist-verify.Ltm17h`: `npm ci` passed with 0 vulnerabilities.
-- All 17 claim commands ran separately and passed.
-- Clean full suite: 4 unit tests and 19 Chromium tests passed.
-- Live full suite: `npm run test:live`, 19/19 passed.
-- Live URL verifier on `/` and `/?demo=1`: HTTP 200, correct title, `lang=en`, one H1, main landmark, labelled buttons, no missing alt text, zero console errors.
-- Live unknown URL: HTTP 404 with `Page not found`.
-- Live hashed assets: 23,514 B JS and 12,760 B CSS; both return `Cache-Control: public, max-age=31536000, immutable`.
-- Live Lighthouse mobile: Performance 100, Accessibility 100, Best Practices 100, SEO 100; LCP 1.6 s, CLS 0.028, TBT 0 ms.
-- Accessibility: Playwright axe found no serious or critical issues on home, both demo entries, Privacy, Terms, or 404.
-- Privacy: a complete demo run made only same-origin requests and set no cookies.
-- Offline: a fresh isolated context reloaded the playable sample offline after service-worker control.
-- Performance: the phone frame sampler passed the 50 fps floor for the 60 fps target.
-- Dependency audit: 0 vulnerabilities.
+- **Medium, release-blocking:** four mobile link targets are narrower than 44 px.
+- **Medium, release-blocking:** 200% text sizing produces header overflow and clipping.
+- **Low:** README does not state the brief's intended 4–6 minute run length.
+- **Critical/high:** none.
 
-Evidence:
-
-- [Live demo at 390 × 844](evidence/polish-1/live-demo/screenshot-mobile.png)
-- [Live Privacy page at 390 × 844](evidence/polish-1/live-privacy-mobile.png)
-- [Live designed 404](evidence/polish-1/live-404-desktop.png)
-- [Live URL verifier report](evidence/polish-1/live-demo/verify.json)
-- [Live Lighthouse report](evidence/polish-1/lighthouse-live.json)
-
-## Run and deploy
+## Reproduce
 
 ```sh
 npm ci
 npm test
 npm run build
 npm run test:live
-/opt/fleet/lib/deploy-static.sh five-minute-heist dist
+npm audit --audit-level=high
 ```
 
-The deploy artifact is `dist/`.
+Manual checks:
 
-## Known gaps
+- Open `https://five-minute-heist.sociobot.in/?demo=1` at 390 × 844 and inspect the link rectangles.
+- Increase the root text size to 200% at 390 px; the header becomes 399 px wide.
+- Play `D,D,D,D,D` for the loss path, clear with Backspace, then play `U,U,L,U,L` and Enter for the end screen.
 
-None within the work order. Native sharing remains browser-dependent; the tested clipboard path is the fallback.
+## Scope notes
+
+This is a static browser game. It has no backend endpoint, product-unlock call, sign-in, payment, or AI feature, so rate-limit and Entra checks are not applicable. No infrastructure, DNS, secrets, or other products were accessed.
