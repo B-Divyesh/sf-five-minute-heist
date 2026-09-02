@@ -26,6 +26,28 @@ async function completeGame(page: import("@playwright/test").Page, plan = sample
   await expect(page.getByRole("heading", { name: "You escaped with the exhibit" })).toBeVisible({ timeout: 8_000 });
 }
 
+async function sampleRunningFrameRate(page: import("@playwright/test").Page): Promise<number> {
+  return page.evaluate(() => new Promise<number>((resolve) => {
+    const samples: number[] = [];
+    let previous = performance.now();
+    const measure = (now: number) => {
+      samples.push(now - previous);
+      previous = now;
+      if (samples.length < 65) requestAnimationFrame(measure);
+      else {
+        const measured = samples.slice(5);
+        resolve(1000 / (measured.reduce((sum, value) => sum + value, 0) / measured.length));
+      }
+    };
+    requestAnimationFrame(measure);
+  }));
+}
+
+function median(values: number[]): number {
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted[Math.floor(sorted.length / 2)];
+}
+
 function productionTextFiles(directory: string): string[] {
   return readdirSync(directory).flatMap((name) => {
     const path = join(directory, name);
@@ -140,20 +162,22 @@ test("@claim:result-glyph result text hides all directions", async ({ page, cont
   expect(copied).not.toMatch(/[↑→↓←]/u);
 });
 
-test("@claim:frame-rate animation frames stay above 50 fps at phone size", async ({ page }) => {
+test("@claim:frame-rate three running phone samples have a 50 fps median floor", async ({ page }, testInfo) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  const fps = await page.evaluate(() => new Promise<number>((resolve) => {
-    const samples: number[] = [];
-    let previous = performance.now();
-    const measure = (now: number) => {
-      samples.push(now - previous);
-      previous = now;
-      if (samples.length < 60) requestAnimationFrame(measure);
-      else resolve(1000 / (samples.slice(5).reduce((sum, value) => sum + value, 0) / 55));
-    };
-    requestAnimationFrame(measure);
-  }));
-  expect(fps).toBeGreaterThanOrEqual(50);
+  const samples: number[] = [];
+  for (let run = 0; run < 3; run += 1) {
+    await page.getByRole("button", { name: "Reset demo" }).click();
+    await enterPlan(page, sampleSolution);
+    await page.getByRole("button", { name: "Run the plan" }).click();
+    await expect(page.getByRole("button", { name: "Pause plan" })).toBeVisible();
+    samples.push(await sampleRunningFrameRate(page));
+  }
+  const fps = median(samples);
+  await testInfo.attach("frame-rate-samples.json", {
+    body: JSON.stringify({ viewport: "390x844", framesPerSample: 60, samples, median: fps }, null, 2),
+    contentType: "application/json"
+  });
+  expect(fps, `running-frame-rate samples: ${samples.map((sample) => sample.toFixed(2)).join(", ")}`).toBeGreaterThanOrEqual(50);
 });
 
 test("@claim:browser-generated no answer is shipped or requested while the browser builds the board", async ({ page, baseURL }) => {

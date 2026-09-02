@@ -42,7 +42,7 @@ npm test
 npm run build
 ```
 
-`npm test` runs four deterministic core tests and the browser claim suite through the Azure Static Web Apps emulator. The suite verifies real HTTP routing, a 390 × 844 layout, accessibility, privacy, offline reload, and a measured 50 fps floor.
+`npm test` runs four deterministic core tests and the browser claim suite through the Azure Static Web Apps emulator. The suite verifies real HTTP routing, a 390 × 844 layout, accessibility, privacy, offline reload, and a 50 fps median floor from three active game runs.
 
 Each command in [.factory/claims.json](.factory/claims.json) runs one observable claim test from the sample entry point.
 

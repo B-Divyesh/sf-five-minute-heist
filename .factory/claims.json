@@ -109,7 +109,7 @@
     "claim": "The game targets 60 fps on a mid-range phone, with a tested 50 fps floor.",
     "where": "README, handoff",
     "test": "npm test -- --grep @claim:frame-rate",
-    "sandbox": "390x844 Chromium viewport; sample 60 animation frames and assert at least 50 fps"
+    "sandbox": "390x844 Chromium viewport; run three fresh sample plans, measure 60 frames during each active run, and assert a median of at least 50 fps"
   },
   {
     "id": "original-art-provenance",

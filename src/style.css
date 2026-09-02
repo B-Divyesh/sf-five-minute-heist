@@ -363,11 +363,23 @@ h3 { font-size: 1.22rem; }
   .site-nav a { font-size: 0.88rem; }
   .text-page a { display: inline-flex; min-width: 44px; min-height: 44px; align-items: center; }
   .hero { padding: 30px 12px 52px; }
-  .hero::before { background-image: linear-gradient(180deg, rgb(7 19 27 / 62%), var(--night) 58%), url("/art/museum-night-768.webp"); background-position: 64% top; background-size: auto 520px; background-repeat: no-repeat; }
+  .hero::before {
+    background-image: linear-gradient(180deg, rgb(7 19 27 / 62%), var(--night) 58%), url("/art/museum-night-768.webp");
+    background-position: 64% top;
+    background-size: auto 520px;
+    background-repeat: no-repeat;
+    /* Keep the planning board responsive on phones: the scene is atmosphere, not game state. */
+    animation: none;
+  }
   .hero-copy { min-height: 360px; }
   .hero-intro { margin-top: 14px; }
   .facts { margin-top: 16px; }
-  .game-shell { padding: 14px; }
+  .game-shell {
+    padding: 14px;
+    /* Mobile browsers repaint a large backdrop-filter for every composited frame. */
+    background: linear-gradient(145deg, rgb(18 52 66 / 96%), rgb(7 19 27 / 98%));
+    backdrop-filter: none;
+  }
   .board-wrap { grid-template-columns: 1fr; }
   .guard-key { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .guard-key li { margin: 0; }

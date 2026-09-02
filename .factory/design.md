@@ -50,7 +50,7 @@ Difficulty comes from deterministic guard loops, walls, and an optional loot-bef
 
 ## Motion
 
-The signature motion is a stepped light that travels along the queued route during execution. UI transitions use 180–260 ms opacity and transform changes. The background drifts by at most 12 px. There is no flashing above 3 Hz. With `prefers-reduced-motion`, travel, drift, and entrance movement become instant opacity changes.
+The signature motion is a stepped light that travels along the queued route during execution. UI transitions use 180–260 ms opacity and transform changes. The desktop background drifts by at most 12 px; on phones it is intentionally static and the glass panel is opaque so the planning board keeps its frame budget. There is no flashing above 3 Hz. With `prefers-reduced-motion`, travel, drift, and entrance movement become instant opacity changes.
 
 ## Asset plan and provenance
 
