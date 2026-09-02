@@ -1,5 +1,11 @@
 # Five-Minute Heist handoff
 
+## Independent verification result — PASS
+
+Candidate `731cf94d9f7038f62f432e34228a84f65a9fb47b` was independently verified against https://five-minute-heist.sociobot.in on 2026-09-02 UTC. **PASS: no release-blocking defects.** Clean claims, full tests, build, live deployment identity comparison, cold first-read, desktop/mobile play, keyboard game run, offline reload, request privacy, headers, console errors, and axe serious/critical checks all passed. Full evidence is in `.factory/verification.md`.
+
+One low-severity follow-up remains: live static app and CSS responses use `max-age=30`; adopt content-hashed assets with immutable cache headers in a future release. The verified service worker still supports the required offline reload.
+
 ## Built
 
 - A finished daily 5 × 5 plan-then-watch stealth puzzle.
