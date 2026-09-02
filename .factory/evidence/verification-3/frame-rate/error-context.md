@@ -1,0 +1,133 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to game" [ref=e2] [cursor=pointer]:
+    - /url: "#main"
+  - generic [ref=e4]:
+    - banner [ref=e5]:
+      - link "Five-Minute Heist" [ref=e6] [cursor=pointer]:
+        - /url: /
+        - text: Five-Minute Heist
+      - navigation "Main navigation" [ref=e8]:
+        - link "Daily" [ref=e9] [cursor=pointer]:
+          - /url: /
+        - link "Demo" [ref=e10] [cursor=pointer]:
+          - /url: /demo
+        - link "Privacy" [ref=e11] [cursor=pointer]:
+          - /url: /privacy
+    - complementary "Demo mode" [ref=e12]:
+      - generic [ref=e13]: Demo — sample data, nothing is saved to your daily game.
+      - button "Reset demo" [active] [ref=e14] [cursor=pointer]
+      - button "Open today’s game" [ref=e15] [cursor=pointer]
+    - main [ref=e16]:
+      - generic [ref=e18]:
+        - generic [ref=e19]:
+          - heading "Plan the sample museum heist" [level=1] [ref=e20]
+          - paragraph [ref=e21]: The ready sample has its own progress. Reset it at any time.
+          - text: — — —
+        - region "Five-move planning board" [ref=e22]:
+          - generic [ref=e23]:
+            - generic [ref=e24]:
+              - paragraph [ref=e25]: Practice gallery
+              - generic [ref=e26]: Sample gallery · seed sample-glass-gallery
+            - button "Turn sound on" [ref=e27] [cursor=pointer]
+          - generic [ref=e28]:
+            - img "Five by five gallery. You are in C5. The exhibit is in A2." [ref=e29]:
+              - generic [ref=e30]: A1
+              - generic [ref=e31]: B1
+              - generic [ref=e32]: C1
+              - generic [ref=e33]:
+                - generic [ref=e34]: G2
+                - text: D1
+              - generic [ref=e35]: E1
+              - generic [ref=e36]:
+                - generic [ref=e38]: ART
+                - text: A2
+              - generic [ref=e39]: B2
+              - generic [ref=e40]: C2
+              - generic [ref=e41]: D2
+              - generic [ref=e42]: E2
+              - generic [ref=e43]: A3
+              - generic [ref=e44]:
+                - generic [ref=e45]: G1
+                - text: B3
+              - generic [ref=e46]: C3
+              - generic [ref=e47]: D3
+              - generic [ref=e48]: E3
+              - generic [ref=e49]: A4
+              - generic [ref=e50]: B4
+              - generic [ref=e51]: C4
+              - generic [ref=e52]: D4
+              - generic [ref=e53]: E4
+              - generic [ref=e54]: A5
+              - generic [ref=e55]: B5
+              - generic [ref=e56]:
+                - generic [ref=e57]: YOU
+                - text: C5
+              - generic [ref=e58]: D5
+              - generic [ref=e59]: E5
+            - list "Guard loops" [ref=e60]:
+              - listitem [ref=e61]:
+                - strong [ref=e62]: Guard 1 loop
+                - generic [ref=e63]: B3 → B4 → A4 → A3 → B3 → B4
+              - listitem [ref=e64]:
+                - strong [ref=e65]: Guard 2 loop
+                - generic [ref=e66]: D1 → E1 → E2 → D2 → D1 → E1
+          - paragraph [ref=e67]:
+            - strong [ref=e68]: "Goal:"
+            - text: Reach the exhibit in A2 in exactly five moves.
+          - status [ref=e69]: Add five moves. The board previews the guards after each move.
+          - generic [ref=e70]:
+            - generic [ref=e71]:
+              - generic [ref=e72]: Your five moves
+              - generic [ref=e73]: 0/5
+            - generic "Planned moves" [ref=e74]:
+              - 'generic "Move 1: empty" [ref=e75]': "1"
+              - 'generic "Move 2: empty" [ref=e76]': "2"
+              - 'generic "Move 3: empty" [ref=e77]': "3"
+              - 'generic "Move 4: empty" [ref=e78]': "4"
+              - 'generic "Move 5: empty" [ref=e79]': "5"
+            - generic "Add a move" [ref=e80]:
+              - button "Add move U — up" [ref=e81] [cursor=pointer]: ↑
+              - button "Add move R — right" [ref=e82] [cursor=pointer]: →
+              - button "Add move D — down" [ref=e83] [cursor=pointer]: ↓
+              - button "Add move L — left" [ref=e84] [cursor=pointer]: ←
+            - generic [ref=e85]:
+              - button "Remove last move" [disabled] [ref=e86]
+              - button "Run the plan" [disabled] [ref=e87]
+      - region "How the daily heist works" [ref=e88]:
+        - generic [ref=e89]:
+          - heading "How the daily heist works" [level=2] [ref=e90]
+          - list [ref=e91]:
+            - listitem [ref=e92]:
+              - heading "Study both guard loops" [level=3] [ref=e93]
+              - paragraph [ref=e94]: Each line shows where that guard stands after every move.
+            - listitem [ref=e95]:
+              - heading "Queue five moves" [level=3] [ref=e96]
+              - paragraph [ref=e97]: Use the arrow buttons or arrow keys. The board previews each step.
+            - listitem [ref=e98]:
+              - heading "Run and share" [level=3] [ref=e99]
+              - paragraph [ref=e100]: Watch the plan play. A sealed glyph shares the result without directions.
+      - region "What the game does not do" [ref=e101]:
+        - generic [ref=e102]:
+          - heading "What the game does not do" [level=2] [ref=e103]
+          - generic [ref=e104]:
+            - paragraph [ref=e105]: It does not use accounts, tracking cookies, ads, or paid hints.
+            - paragraph [ref=e106]: Your plan, result, and sound choice stay in local browser storage. Demo progress uses a separate sample key.
+            - paragraph [ref=e107]: The daily generator sends no answer. It builds and checks the gallery in your browser.
+    - contentinfo [ref=e108]:
+      - generic [ref=e109]:
+        - strong [ref=e110]: Five-Minute Heist
+        - text: — Plan five moves through one daily museum.
+        - text: Original generated scene made for this game. Version 1.1.1.
+      - generic [ref=e111]:
+        - link "Privacy" [ref=e112] [cursor=pointer]:
+          - /url: /privacy
+        - link "Terms" [ref=e113] [cursor=pointer]:
+          - /url: /terms
+        - link "Built by Param Factory (opens in a new tab)" [ref=e114] [cursor=pointer]:
+          - /url: https://hello-factory.sociobot.in
+          - text: Built by Param Factory
+          - generic [ref=e115]: (opens in a new tab)
+```
