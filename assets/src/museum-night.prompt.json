@@ -1,0 +1,9 @@
+{
+  "tool": "/opt/fleet/lib/gen-image.sh",
+  "deployment": "factory-image",
+  "date": "2026-09-02",
+  "size": "1536x1024",
+  "quality": "high",
+  "prompt": "Use case: stylized-concept. Asset type: wide browser-game hero scene. An impossible after-hours museum made from suspended transparent glass galleries above a dark reflective void. A tiny empty central exhibit plinth, thin cyan route lines in the architecture, one warm amber display light, one distant coral alarm lamp. Isometric editorial composition with generous dark negative space on the left, crystalline edges, subtle volumetric haze, high-end 3D illustration, no people. Palette: blue-black, deep teal glass, pale cyan, restrained amber and coral. No text, letters, numbers, logos, brands, watermark, UI, hands, faces, or legible signage.",
+  "review": "Accepted: no text artifacts, people, brands, watermarks, or broken seams found."
+}
