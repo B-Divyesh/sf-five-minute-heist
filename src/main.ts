@@ -40,7 +40,7 @@ const app: HTMLDivElement = appElement;
 const routeStatus = document.querySelector<HTMLDivElement>("#route-status");
 
 const DEMO_SEED = "sample-glass-gallery";
-const APP_VERSION = "1.1.1";
+const APP_VERSION = "1.1.2";
 const demoPrefix = "demo:five-minute-heist";
 const realPrefix = "five-minute-heist";
 let game: GameState | null = null;
@@ -276,11 +276,11 @@ function statusClass(state: GameState): string {
 function endCard(state: GameState): string {
   if (state.phase !== "won" || !state.completedPlan) return "";
   const score = state.best;
-  const glyph = pathGlyph(state.completedPlan, state.seed);
+  const symbols = pathGlyph(state.completedPlan, state.seed);
   return `<section class="end-card" aria-labelledby="result-heading">
     <h3 id="result-heading">You escaped with the exhibit</h3>
     <p class="score">${score.toLocaleString()} points</p>
-    <p class="glyph" aria-label="Sealed path ${glyph.split("").join(" ")}">${glyph}</p>
+    <p class="glyph" aria-label="Result symbols: ${symbols.split("").join(" ")}">${symbols}</p>
     <div class="end-actions">
       <button type="button" data-action="copy-result">${state.copied ? "Result copied" : "Copy result"}</button>
       <button type="button" data-action="play-again">Play again</button>
@@ -305,7 +305,7 @@ function gameMarkup(state: GameState): string {
   const boardAndLoops = `<div class="board-wrap">${boardMarkup(state)}${guardKey(state)}</div>`;
   return `<section class="game-shell" id="game" aria-label="Five-move planning board">
     <div class="game-topline">
-      <div><p class="game-title">${isDemo() ? "Practice gallery" : "Today’s gallery"}</p><span class="seed">${dateLabel} · seed ${state.seed}</span></div>
+      <div><p class="game-title">${isDemo() ? "Practice gallery" : "Today’s gallery"}</p><span class="seed">${dateLabel}</span></div>
       <button class="sound-button" type="button" data-action="toggle-sound" aria-pressed="${state.soundEnabled}">Turn sound ${state.soundEnabled ? "off" : "on"}</button>
     </div>
     ${isDemo() ? `${boardAndLoops}${objectiveMarkup}${statusMarkup}` : `${objectiveMarkup}${statusMarkup}${boardAndLoops}`}
@@ -354,12 +354,12 @@ function landing(route: "/" | "/demo"): string {
           <ol class="steps">
             <li><h3>Study both guard loops</h3><p>Each line shows where that guard stands after every move.</p></li>
             <li><h3>Queue five moves</h3><p>Use the arrow buttons or arrow keys. The board previews each step.</p></li>
-            <li><h3>Run and share</h3><p>Watch the plan play. A sealed glyph shares the result without directions.</p></li>
+            <li><h3>Run and share</h3><p>Watch the plan play. Five result symbols let you share without revealing your directions.</p></li>
           </ol>
         </div>
       </section>
       <section class="content-section" aria-labelledby="privacy-heading">
-        <div class="section-inner plain-grid"><h2 id="privacy-heading">What the game does not do</h2><div><p>It does not use accounts, tracking cookies, ads, or paid hints.</p><p>Your plan, result, and sound choice stay in local browser storage. Demo progress uses a separate sample key.</p><p>The daily generator sends no answer. It builds and checks the gallery in your browser.</p></div></div>
+        <div class="section-inner plain-grid"><h2 id="privacy-heading">What the game does not do</h2><div><p>It does not use accounts, tracking cookies, ads, or paid hints.</p><p>Your plan, result, and sound choice stay in local browser storage. Demo progress stays separate from your daily progress.</p><p>The daily generator sends no answer. It builds and checks the gallery in your browser.</p></div></div>
       </section>
     </main>${footer()}`;
 }
@@ -369,7 +369,7 @@ function privacyPage(): string {
     <p class="eyebrow">Privacy</p><h1 tabindex="-1">Your game stays in your browser</h1>
     <p>Five-Minute Heist does not ask for an account or collect personal details.</p>
     <h2>What is stored</h2><p>Your current plan, attempts, best score, completed result, and sound choice use local browser storage.</p>
-    <h2>Demo separation</h2><p>The demo uses storage keys that start with <code>demo:</code>. Resetting or leaving the demo removes those sample keys.</p>
+    <h2>Demo separation</h2><p>The demo stores progress separately from the daily game. Resetting or leaving the demo removes only sample progress.</p>
     <h2>Network requests</h2><p>The game loads its own files from this site. It does not load analytics, ads, third-party fonts, or tracking scripts.</p>
     <h2>Remove your data</h2><p>Clear this site’s browser storage to remove all saved progress.</p>
     <h2>Questions</h2><p>Email <a href="mailto:privacy@sociobot.in">privacy@sociobot.in</a>.</p>
@@ -388,7 +388,7 @@ function termsPage(): string {
 }
 
 function notFoundPage(): string {
-  return `${header("/404")}<main id="main" class="text-page not-found"><article><p class="eyebrow">404</p><h1 tabindex="-1">Page not found</h1><p>This room is not in the gallery. Today’s heist is still ready.</p><a class="primary-action" href="/" data-route>Return to today’s game</a></article></main>${footer()}`;
+  return `${header("/404")}<main id="main" class="text-page not-found"><article><p class="eyebrow">404</p><h1 tabindex="-1">Page not found</h1><p>The address does not match a page on this site. Today’s game is still ready.</p><a class="primary-action" href="/" data-route>Return to today’s game</a></article></main>${footer()}`;
 }
 
 function render(focusHeading = false): void {
@@ -560,7 +560,7 @@ async function copyResult(): Promise<void> {
     if (navigator.share) await navigator.share({ title: "Five-Minute Heist", text });
     else await navigator.clipboard.writeText(text);
     game.copied = true;
-    game.message = "Result copied. The glyph does not show your directions.";
+    game.message = "Result copied. The symbols do not show your directions.";
   } catch (error) {
     if ((error as DOMException).name !== "AbortError") game.message = "The result could not be copied. Use your browser’s share menu instead.";
   }

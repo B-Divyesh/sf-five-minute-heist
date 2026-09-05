@@ -4,7 +4,7 @@
     "claim": "Try it with sample data opens a ready gallery in one click, with the board in the first 390 pixels on a phone.",
     "where": "landing first screen, demo",
     "test": "npm test -- --grep @claim:sample-ready",
-    "sandbox": "fresh Chromium at 390x844; follow /?demo=1 action and assert banner, seed, loops, plan slots, and board top"
+    "sandbox": "fresh Chromium at 390x844; follow /?demo=1 action and assert the persistent sample label, generated board state, loops, plan slots, and board top"
   },
   {
     "id": "free-access",
@@ -50,14 +50,14 @@
   },
   {
     "id": "privacy-default",
-    "claim": "The game uses no account, tracking cookies, ads, analytics, or third-party runtime files.",
+    "claim": "The game uses no account, tracking cookies, ads, or analytics. It loads no code, fonts, or images from other sites.",
     "where": "landing privacy section, privacy page, README",
     "test": "npm test -- --grep @claim:privacy-default",
     "sandbox": "fresh demo through a complete run; assert no account/payment UI, no cookies, no external scripts, and only same-origin requests"
   },
   {
     "id": "demo-isolation",
-    "claim": "Demo writes use only the demo namespace; reset and exit remove them without changing daily data.",
+    "claim": "Demo progress is stored separately; reset and exit remove it without changing daily data.",
     "where": "demo banner, privacy page, README",
     "test": "npm test -- --grep @claim:demo-isolation",
     "sandbox": "seed a daily sentinel; write, reset, write, and exit demo; inspect every storage key after each action"
@@ -84,11 +84,11 @@
     "sandbox": "own fresh browser context; wait for service-worker control, go offline, reload, and assert the playable board"
   },
   {
-    "id": "result-glyph",
-    "claim": "A sealed glyph shares the result without directions.",
+    "id": "result-symbols",
+    "claim": "Five result symbols can be shared without revealing the player’s directions.",
     "where": "how it works, end screen, README",
-    "test": "npm test -- --grep @claim:result-glyph",
-    "sandbox": "complete demo, copy result, and assert five allowed glyphs with no direction arrows"
+    "test": "npm test -- --grep @claim:result-symbols",
+    "sandbox": "complete demo, compare the five visible result symbols with the copied result, and assert that no direction arrows appear"
   },
   {
     "id": "solvable-generator",

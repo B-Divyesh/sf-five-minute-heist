@@ -66,13 +66,44 @@ test("@claim:sample-ready one click opens the ready isolated sample with its boa
   await page.goto("/");
   await page.getByRole("link", { name: "Try it with sample data" }).click();
   await expect(page).toHaveURL(/\/?\?demo=1$/u);
-  await expect(page.getByText("Demo — sample data, nothing is saved to your daily game.")).toBeVisible();
-  await expect(page.getByText("seed sample-glass-gallery")).toBeVisible();
-  await expect(page.locator(".guard-route")).toHaveCount(2);
+  const demoLabel = page.getByText("Demo — sample data, nothing is saved to your daily game.");
+  await expect(demoLabel).toBeVisible();
+  await expect(page.locator(".seed")).toHaveText("Sample gallery");
+  await expect(page.getByRole("img", {
+    name: new RegExp(`You are in ${cellName(samplePuzzle.start)}.*The exhibit is in ${cellName(samplePuzzle.vault)}`, "u")
+  })).toBeVisible();
+  const expectedLoops = samplePuzzle.guards.map((guard) =>
+    Array.from({ length: 6 }, (_, turn) => cellName(guardPosition(guard, turn))).join(" → ")
+  );
+  await expect(page.locator(".guard-route")).toHaveText(expectedLoops);
   await expect(page.locator(".plan-slot")).toHaveCount(5);
   const box = await page.locator(".board").boundingBox();
   expect(box).not.toBeNull();
   expect(box!.y).toBeLessThan(390);
+  await page.locator(`[data-direction="${sampleSolution[0]}"]`).click();
+  await expect(demoLabel).toBeVisible();
+  await page.getByRole("button", { name: "Reset demo" }).click();
+  await expect(demoLabel).toBeVisible();
+});
+
+test("cold phone and desktop screens state the job, audience, first action, and show the game before scrolling", async ({ browser, baseURL }) => {
+  for (const viewport of [{ width: 390, height: 844 }, { width: 1440, height: 900 }]) {
+    const context = await browser.newContext({ viewport });
+    const coldPage = await context.newPage();
+    await coldPage.goto(`${baseURL}/`);
+    await expect(coldPage.getByRole("heading", { level: 1, name: "Plan a five-move museum heist" })).toBeVisible();
+    await expect(coldPage.getByText("For solo players who want a short daily puzzle without another word game.")).toBeVisible();
+    const firstAction = coldPage.getByRole("link", { name: "Try it with sample data" });
+    await expect(firstAction).toBeVisible();
+    const actionBox = await firstAction.boundingBox();
+    const boardBox = await coldPage.locator(".board").boundingBox();
+    expect(await coldPage.evaluate(() => scrollY)).toBe(0);
+    expect(actionBox).not.toBeNull();
+    expect(boardBox).not.toBeNull();
+    expect(actionBox!.y).toBeLessThan(viewport.height);
+    expect(boardBox!.y).toBeLessThan(viewport.height);
+    await context.close();
+  }
 });
 
 test("@claim:free-access a visitor completes the sample without an account or payment", async ({ page }) => {
@@ -151,15 +182,20 @@ test("@claim:privacy-default the full demo sets no cookies and contacts no third
   expect(await page.locator('script[src^="http"], link[href^="http"]:not([rel="canonical"])').count()).toBe(0);
 });
 
-test("@claim:result-glyph result text hides all directions", async ({ page, context }) => {
+test("@claim:result-symbols visible result symbols match the copied result and hide all directions", async ({ page, context }) => {
   await context.grantPermissions(["clipboard-read", "clipboard-write"]);
   await page.addInitScript(() => { Object.defineProperty(navigator, "share", { value: undefined, configurable: true }); });
   await completeGame(page);
+  const resultSymbols = page.getByLabel(/^Result symbols:/u);
+  await expect(resultSymbols).toBeVisible();
+  const visibleSymbols = (await resultSymbols.textContent())?.trim() ?? "";
+  expect(visibleSymbols).toMatch(/^[◆◇○□△✦]{5}$/u);
   await page.getByRole("button", { name: "Copy result" }).click();
   await expect(page.getByRole("button", { name: "Result copied" })).toBeVisible();
   const copied = await page.evaluate(() => navigator.clipboard.readText());
-  expect(copied).toMatch(/[◆◇○□△✦]{5}/u);
+  expect(copied).toContain(visibleSymbols);
   expect(copied).not.toMatch(/[↑→↓←]/u);
+  expect(copied).not.toContain(sampleSolution.join(""));
 });
 
 test("@claim:frame-rate three running phone samples have a 50 fps median floor", async ({ page }, testInfo) => {
@@ -184,7 +220,7 @@ test("@claim:browser-generated no answer is shipped or requested while the brows
   const requests: string[] = [];
   page.on("request", (request) => requests.push(request.url()));
   await page.reload();
-  await expect(page.getByText("seed sample-glass-gallery")).toBeVisible();
+  await expect(page.locator(".seed")).toHaveText("Sample gallery");
   expect(requests.every((url) => new URL(url).origin === new URL(baseURL!).origin)).toBe(true);
   expect(requests.some((url) => /answer|solution|api/iu.test(new URL(url).pathname))).toBe(false);
   const artifact = productionTextFiles("dist").map((path) => readFileSync(path, "utf8")).join("\n");
@@ -231,6 +267,39 @@ test("@claim:touch-controls on-screen controls complete the sample with touch in
   for (const direction of sampleSolution) await touchPage.locator(`[data-direction="${direction}"]`).tap();
   await touchPage.getByRole("button", { name: "Run the plan" }).tap();
   await expect(touchPage.getByRole("heading", { name: "You escaped with the exhibit" })).toBeVisible({ timeout: 8_000 });
+  await context.close();
+});
+
+test("invalid and boundary input reaches a clear loss, then keyboard recovery reaches the end screen", async ({ page }) => {
+  await expect(page.getByRole("button", { name: "Run the plan" })).toBeDisabled();
+  for (let move = 0; move < 6; move += 1) await page.keyboard.press("ArrowDown");
+  await expect(page.getByText("5/5")).toBeVisible();
+  await expect(page.getByRole("button", { name: /Add move/u }).first()).toBeDisabled();
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("status")).toContainText("hit a wall", { timeout: 8_000 });
+  for (let move = 0; move < 5; move += 1) await page.keyboard.press("Backspace");
+  await expect(page.getByText("0/5")).toBeVisible();
+
+  const keyNames: Record<Direction, string> = { U: "ArrowUp", R: "ArrowRight", D: "ArrowDown", L: "ArrowLeft" };
+  for (const direction of sampleSolution) await page.keyboard.press(keyNames[direction]);
+  await page.keyboard.press("Enter");
+  await expect(page.getByRole("button", { name: "Pause plan" })).toBeVisible();
+  await page.getByRole("button", { name: "Pause plan" }).click();
+  const pausedTurn = await page.locator(".board").getAttribute("data-turn");
+  await page.waitForTimeout(700);
+  await expect(page.locator(".board")).toHaveAttribute("data-turn", pausedTurn ?? "0");
+  await page.getByRole("button", { name: "Resume plan" }).click();
+  await expect(page.getByRole("heading", { name: "You escaped with the exhibit" })).toBeVisible({ timeout: 8_000 });
+});
+
+test("reduced motion keeps the complete game playable", async ({ browser, baseURL }) => {
+  const context = await browser.newContext({ reducedMotion: "reduce", viewport: { width: 390, height: 844 } });
+  const reducedPage = await context.newPage();
+  await reducedPage.goto(`${baseURL}/?demo=1`);
+  expect(await reducedPage.evaluate(() => matchMedia("(prefers-reduced-motion: reduce)").matches)).toBe(true);
+  await enterPlan(reducedPage, sampleSolution);
+  await reducedPage.getByRole("button", { name: "Run the plan" }).click();
+  await expect(reducedPage.getByRole("heading", { name: "You escaped with the exhibit" })).toBeVisible({ timeout: 3_000 });
   await context.close();
 });
 
@@ -318,6 +387,16 @@ test("all public pages pass the serious accessibility and console-error baseline
   const errors: string[] = [];
   page.on("pageerror", (error) => errors.push(String(error)));
   page.on("console", (message) => { if (message.type() === "error") errors.push(message.text()); });
+  await page.goto("/");
+  await page.keyboard.press("Tab");
+  const skipLink = page.getByRole("link", { name: "Skip to game" });
+  await expect(skipLink).toBeFocused();
+  const focusStyle = await skipLink.evaluate((element) => {
+    const style = getComputedStyle(element);
+    return { width: Number.parseFloat(style.outlineWidth), style: style.outlineStyle };
+  });
+  expect(focusStyle.width).toBeGreaterThanOrEqual(3);
+  expect(focusStyle.style).not.toBe("none");
   for (const route of ["/", "/?demo=1", "/demo", "/privacy", "/terms"]) {
     await page.goto(route);
     await expect(page.locator("main")).toBeVisible();

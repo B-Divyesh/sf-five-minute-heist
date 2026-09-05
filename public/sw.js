@@ -1,4 +1,4 @@
-const CACHE_NAME = "five-minute-heist-v3";
+const CACHE_NAME = "five-minute-heist-v4";
 const SHELL = [
   "/",
   "/demo",

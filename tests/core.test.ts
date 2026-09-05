@@ -20,7 +20,7 @@ describe("daily puzzle generator", () => {
     expect(simulatePlan(puzzle, solution.slice(0, 4)).won).toBe(false);
   });
 
-  it("creates a sealed five-symbol result", () => {
+  it("creates five spoiler-free result symbols", () => {
     expect(pathGlyph(["U", "R", "D", "L", "U"], "demo-gallery")).toHaveLength(5);
     expect(pathGlyph(["U", "R", "D", "L", "U"], "demo-gallery")).not.toContain("↑");
   });

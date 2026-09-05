@@ -46,7 +46,7 @@ On phones, the scene becomes a shallow backdrop and the board stacks below the s
 - Failure keeps the attempted plan visible until the player edits it.
 - Sound is off by default and only starts after a deliberate toggle.
 
-Difficulty comes from deterministic guard loops, walls, and an optional loot-before-exit rule. The generator searches every five-move route and accepts only solvable daily boards. It favors 2–18 valid plans so a run stays within 4–6 minutes.
+Difficulty comes from deterministic guard loops, walls, and an optional loot-before-exit rule. The generator searches every five-move route and accepts only solvable daily boards. It favors 2–18 valid plans to support the brief’s intended short session.
 
 ## Motion
 
