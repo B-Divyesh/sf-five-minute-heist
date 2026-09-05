@@ -1,0 +1,12 @@
+{
+  "coldReads": ["phone", "desktop"],
+  "paths": [
+    "phone invalid plan reached a clear loss",
+    "phone reset then valid touch plan reached scored win",
+    "desktop keyboard plan reached scored win"
+  ],
+  "consoleErrors": [],
+  "externalRequests": [],
+  "frameRates": [60, 60, 60],
+  "medianFrameRate": 60
+}
