@@ -1,22 +1,75 @@
-# Five-Minute Heist adversarial review 2 handoff
+# Five-Minute Heist repair 3 handoff
 
 ## Outcome
 
-Review 2 is complete at candidate `70f8f4e54c9dc24398999dfb212bd90b72adf677` and records a **FAIL** in `.factory/review-2.md`.
+Repair 3 is complete and deployed. The implementation candidate is `9ca7b1658f9c7edc54f9d3db77d05401d8a3df16`; later report and evidence commits do not change the deployed product.
 
-Product code was not modified. The blocking issue is the regression of earlier finding F-1-4j: README again states a 4–6 minute session without a matching claim entry or test. Ten minor plain-language findings also remain.
+The untested 4–6 minute README promise is removed. All ten review-2 copy findings are fixed in the interface, README, claim registry, demo notes, and copy audit. Version 1.1.2 is live at `https://five-minute-heist.sociobot.in`.
 
-## Verification performed
+## Finding disposition
 
-- Fresh 390 × 844 and 1440 × 900 cold first reads of the live root.
-- One-click live demo inspection, including board position, persistent banner, reset, exit, daily-data sentinel, request origins, cookies, and console output.
-- Every one of the 17 `.factory/claims.json` commands run independently from clean clone `/tmp/fmh-review2.19EcRc/repo`: all passed.
-- Clean-clone `npm test`: 4 unit tests and 21 Chromium tests passed.
-- Clean-clone `npm run build`: passed and produced `dist/`.
-- `npm run build && npm run test:live`: 21/21 passed.
-- Live crawl of all public routes and links; metadata, HTTP status, route focus/back behavior, assets, caching, security headers, accessibility baseline, and 404 checked.
-- Every finding in `.factory/review-1.md` and `.factory/polish-1.md` rechecked live and in source.
+| Finding | Current disposition and evidence |
+| --- | --- |
+| F-1-1 | Fixed. One click opens `/?demo=1`; the live phone board starts at 335.6 px and the sample label remains visible through play and reset. `@claim:sample-ready` checks the generated board, both guard loops, five slots, label, and position. |
+| F-1-2 | Fixed. Vite emits versioned assets; live JS and CSS return `max-age=31536000, immutable`. |
+| F-1-3 | Fixed. `/not-a-real-page` returns HTTP 404 with the designed `Page not found` page. Its supporting copy is now literal rather than metaphorical. |
+| F-1-4a–i, k–m | Fixed. The corresponding registered outcome tests pass independently: sample readiness, free access, saved progress, previews, guard loops, privacy, demo isolation, browser generation, touch, exhaustive validation, and artifact scanning. |
+| F-1-4j | Fixed again. README no longer makes an unmeasured 4–6 minute promise. No public duration claim remains. |
+| F-1-5 | Fixed. Daily, Demo, and Privacy remain visible and at least 44 × 44 CSS px on phone routes. |
+| F-1-6 | Fixed. Actions use `Open today’s game`, `Turn sound on`, and `Turn sound off`. |
+| F-1-7 | Fixed. Both app and server 404 pages use `Page not found`. |
+| F-2-1 | Fixed. The 26-word test sentence is split into two short sentences. |
+| F-2-2 | Fixed. Player-facing copy and the accessible result label use `result symbols`. `@claim:result-symbols` compares the visible five symbols with the copied result and rejects direction disclosure. |
+| F-2-3 | Fixed. The game shows `Sample gallery` or the current date, not an internal seed. README says the same date creates the same gallery. |
+| F-2-4 | Fixed. Landing copy says demo progress stays separate from daily progress. |
+| F-2-5 | Fixed. README explains the demo key prefix as separate storage without using `namespace`. |
+| F-2-6 | Fixed. README states the Playwright version and compatibility in plain words. |
+| F-2-7 | Fixed. README describes repeatable logic tests and local browser checks in plain words. |
+| F-2-8 | Fixed. README calls the build files `versioned` and explains the result. |
+| F-2-9 | Fixed. README states the one-year cache outcome, known-route handling, and 404 behavior in three sentences. |
+| F-2-10 | Fixed. Privacy copy names code, fonts, and images loaded from other sites; the same-origin request test passes. |
+| Verification-2 mobile findings | Fixed and retained. All public links pass 44 × 44 px checks; all public pages fit at 200% text on a 390 px viewport. |
+| Verification-3 frame-rate finding | Fixed and retained. Three fresh live phone samples measured 60.0, 60.0, and 60.0 fps. |
 
-## Remaining work
+## Verification
 
-Resolve F-1-4j and F-2-1 through F-2-10 exactly as described in `.factory/review-2.md`, deploy the resulting copy, and repeat the full review. No infrastructure or deployment action was taken.
+Clean checkout: `/tmp/fmh-repair3.pbXsh4/repo` at `9ca7b16`.
+
+- `npm ci`: passed; 61 packages installed; 0 vulnerabilities.
+- Every command in `.factory/claims.json`: 17/17 passed independently in manifest order.
+- `npm test`: passed; 4 logic tests and 24 Chromium tests.
+- `npm run build`: passed and produced `dist/`.
+- `npm audit --audit-level=high`: passed with 0 vulnerabilities.
+- Output: JavaScript 23,540 B raw / 8.72 kB gzip; CSS 13,191 B raw / 3.90 kB gzip; local fonts 57,020 B; phone scene 19,508 B.
+- Local and live URL verification: title, `lang=en`, one H1, main landmark, image alternatives, named buttons, and zero console errors passed for root and demo.
+- Playwright axe integration: zero serious or critical issues across root, both demo URLs, Privacy, Terms, and the HTTP 404.
+- Live `npm run test:live`: 24/24 passed.
+- Lighthouse 12.8.2 mobile: Performance 100, Accessibility 100, Best Practices 100, SEO 100; FCP 0.8 s, LCP 1.5 s, TBT 0 ms, CLS 0.038.
+
+The live deployment completed as `fb9b00ac-9caa-4b55-a519-b072d7cfe01c`. SHA-256 hashes match between `dist/` and HTTPS for the HTML, JS, CSS, service worker, 404 page, manifest, and phone art.
+
+## Cold read and game run
+
+Fresh 390 × 844 and 1440 × 900 browsers, before scrolling, state:
+
+- Job: `Plan a five-move museum heist`.
+- Audience: solo players who want a short daily puzzle instead of another word game.
+- First action: `Try it with sample data`.
+
+The phone root shows the game board within its first viewport. The one-click sample shows its board at 335.6 px, plus the persistent `Demo — sample data, nothing is saved to your daily game` label.
+
+A fresh live phone and desktop run entered the sample, reset it, and played `D,D,D,D,D` to the wall-loss message. Both recovered and played `U,U,L,U,L` to `You escaped with the exhibit`, 900 points after two attempts, and result symbols `◆△✦△◆`. A separate clean win captured the 1,000-point end screen. The only stored key was `demo:five-minute-heist:progress:sample-glass-gallery`; no cookie, daily-data write, foreign request, or console error appeared.
+
+Evidence:
+
+- [Live phone end screen](evidence/repair-3/live-run/end-phone-viewport.png)
+- [Live desktop end screen](evidence/repair-3/live-run/end-desktop-viewport.png)
+- [Live root verifier](evidence/repair-3/live-root/verify.json)
+- [Live demo verifier](evidence/repair-3/live-demo/verify.json)
+- [Lighthouse report](evidence/repair-3/lighthouse-live.json)
+
+## Remaining scope
+
+No known product defect remains. The brief’s 4–6 minute target is an intent, not a measured public promise. A future duration claim needs a defensible timed-player study before it returns to public copy.
+
+This is a static, local-first game. Backend persistence, tenant isolation, API health, and 429 behavior do not apply. AI would not improve the five-move puzzle job, so no model or external integration was added.
