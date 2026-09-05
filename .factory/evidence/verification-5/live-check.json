@@ -1,0 +1,47 @@
+{
+  "checks": [
+    "phone root title is plain and route-specific",
+    "phone first screen names the job",
+    "phone first screen names the audience",
+    "phone first screen has the first action",
+    "phone first screen shows the game board",
+    "phone demo label remains visible",
+    "phone sample is populated",
+    "phone invalid plan reaches a recoverable loss state",
+    "reset demo clears the sample plan",
+    "phone valid plan reaches the scored win screen",
+    "play again clears the plan",
+    "phone active-play median frame rate is 60.00 fps (50 fps floor)",
+    "desktop root title is plain and route-specific",
+    "desktop first screen names the job",
+    "desktop first screen names the audience",
+    "desktop first screen has the first action",
+    "desktop first screen shows the game board",
+    "desktop demo label remains visible",
+    "desktop sample is populated",
+    "desktop keyboard plan reaches the scored win screen",
+    "leaving demo preserves daily data",
+    "leaving demo removes sample data",
+    "/privacy has its route title",
+    "/privacy has its route heading",
+    "/terms has its route title",
+    "/terms has its route heading",
+    "/not-a-real-page has its route title",
+    "/not-a-real-page has its route heading",
+    "reduced-motion demo remains playable",
+    "fresh live sessions produced no console errors",
+    "fresh live sessions made no external requests"
+  ],
+  "consoleErrors": [],
+  "externalRequests": [],
+  "frameRates": [
+    60.00600060005997,
+    59.99999999999999,
+    59.99999999999999
+  ],
+  "routes": [
+    "/privacy",
+    "/terms",
+    "/not-a-real-page"
+  ]
+}

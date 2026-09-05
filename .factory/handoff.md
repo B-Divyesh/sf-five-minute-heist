@@ -73,3 +73,17 @@ Evidence:
 No known product defect remains. The brief’s 4–6 minute target is an intent, not a measured public promise. A future duration claim needs a defensible timed-player study before it returns to public copy.
 
 This is a static, local-first game. Backend persistence, tenant isolation, API health, and 429 behavior do not apply. AI would not improve the five-move puzzle job, so no model or external integration was added.
+
+## Independent verification 5
+
+**PASS — zero findings and zero untested claims.** Independent QA reviewed implementation `9ca7b1658f9c7edc54f9d3db77d05401d8a3df16` at documentation head `7bb9f3a466b17d9b05c0e18fa5d3f3d139b23434`.
+
+- Clean dependencies: `npm ci` passed with zero audit vulnerabilities.
+- Every `.factory/claims.json` command passed separately: 17/17 claims. `npm test` passed 4 unit and 24 local browser tests; `npm run test:live` passed 24/24.
+- `npm run build` passed. Live HTML, JS, CSS, and service-worker hashes equal a fresh candidate build.
+- Fresh live phone and desktop runs showed the job, audience, and `Try it with sample data` before scroll and the game board in the first viewport. Both completed a loss-to-recovery-to-win route; touch and keyboard worked; reset/play-again cleared the plan; demo storage did not affect daily storage.
+- Independent active-play phone frame samples were 60.006, 60.000, and 60.000 fps (60.000 fps median; 50 fps claim floor).
+- URL verifier, Axe checks, privacy/request checks, offline reload, route titles, reduced motion, focus, 200% text, 44 px targets, legal pages, and designed 404 all passed. The 404 is deliberately HTTP 404 and not a defect.
+- Lighthouse mobile output was Performance 99, Accessibility 100, Best Practices 100, SEO 100 (FCP 1.1 s, LCP 1.2 s, TBT 110 ms, CLS 0.001). Lighthouse’s browser crashed only while collecting its final screenshot after writing results; this is a host-tool incident, not a product runtime error.
+
+Evidence and the detailed finding disposition are in [verification-5.md](verification-5.md) and `evidence/verification-5/`. No known product defect remains.
