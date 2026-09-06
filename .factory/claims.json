@@ -112,6 +112,13 @@
     "sandbox": "390x844 Chromium viewport; run three fresh sample plans, measure 60 frames during each active run, and assert a median of at least 50 fps"
   },
   {
+    "id": "session-length",
+    "claim": "The intended session length is 4–6 minutes, measured from a ready sample board to its real end screen.",
+    "where": "README",
+    "test": "npm test -- --grep @claim:session-length",
+    "sandbox": "fresh demo board; use five timed planning intervals, complete the winning route, and assert the measured board-to-end-screen duration is 4–6 minutes"
+  },
+  {
     "id": "original-art-provenance",
     "claim": "The museum scene was generated for this game and its prompt is recorded.",
     "where": "footer, README",

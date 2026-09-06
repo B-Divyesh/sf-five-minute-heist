@@ -40,7 +40,7 @@ const app: HTMLDivElement = appElement;
 const routeStatus = document.querySelector<HTMLDivElement>("#route-status");
 
 const DEMO_SEED = "sample-glass-gallery";
-const APP_VERSION = "1.1.2";
+const APP_VERSION = "1.1.3";
 const demoPrefix = "demo:five-minute-heist";
 const realPrefix = "five-minute-heist";
 let game: GameState | null = null;

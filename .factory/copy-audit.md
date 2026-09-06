@@ -99,6 +99,7 @@ Audited 2026-09-05 from the home and demo screens, game states, policy pages, 40
 | Intro | Plan five moves through one daily 5 × 5 museum. | 10 | Job statement |
 | Intro | Two visible guard loops move after each step, and a valid plan reaches the exhibit. | 15 | `visible-guard-loops` / `complete-run` |
 | Intro | Five-Minute Heist is a free game for one person playing in a browser. | 13 | `free-access` |
+| Intro | Intended session length: 4–6 minutes. | 5 | `session-length` |
 | Intro | Use arrow keys or the on-screen controls. | 8 | `touch-controls` / `complete-run` |
 | Intro | Run the plan, then copy five result symbols that hide your directions. | 12 | `complete-run` / `result-symbols` |
 | Intro | The sample works offline after the first visit. | 8 | `offline-reload` |
@@ -111,6 +112,8 @@ Audited 2026-09-05 from the home and demo screens, game states, policy pages, 40
 | Test | npm test runs four repeatable logic tests and checks every registered browser claim in a local copy of Azure Static Web Apps. | 22 | Test behavior |
 | Test | The suite checks routes, the 390 × 844 layout, accessibility, privacy, and offline reload. | 14 | Test behavior |
 | Test | It also checks three runs against a 50 fps median floor. | 11 | `frame-rate` |
+| Test | The timed session check uses a fresh sample board and five player-paced planning intervals. | 14 | `session-length` |
+| Test | It measures from the ready board to the real end screen. | 11 | `session-length` |
 | Deploy | The build writes versioned JavaScript and CSS files to dist/. | 10 | Build behavior |
 | Deploy | staticwebapp.config.json caches each versioned asset for one year. | 9 | Routing test |
 | Deploy | It sends known routes to the app and unknown routes to the 404 page. | 14 | Routing test |

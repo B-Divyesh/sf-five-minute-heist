@@ -93,7 +93,7 @@ button:disabled { cursor: not-allowed; opacity: 0.46; }
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 4px 12px;
+  gap: 8px 12px;
   min-height: 64px;
   padding: 8px clamp(16px, 4vw, 64px);
   border-bottom: 1px solid var(--line);
@@ -140,7 +140,7 @@ button:disabled { cursor: not-allowed; opacity: 0.46; }
 }
 
 .demo-banner button {
-  min-height: 36px;
+  min-height: 44px;
   padding: 5px 12px;
   border-color: #18212a;
   background: transparent;
@@ -383,13 +383,13 @@ h3 { font-size: 1.22rem; }
   .board-wrap { grid-template-columns: 1fr; }
   .guard-key { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
   .guard-key li { margin: 0; }
-  .controls { gap: 6px; }
+  .controls { gap: 8px; }
   .direction { padding: 0; }
   .content-section { padding: 64px 20px; }
   .steps, .plain-grid { grid-template-columns: 1fr; gap: 32px; }
   .site-footer { grid-template-columns: 1fr; }
 
-  .demo-banner { justify-content: flex-start; gap: 6px 8px; padding: 6px 12px; font-size: 0.86rem; }
+  .demo-banner { justify-content: flex-start; gap: 8px; padding: 6px 12px; font-size: 0.86rem; }
   .demo-banner span { flex-basis: 100%; }
   .demo-banner button { min-height: 44px; padding: 5px 10px; }
   .demo-hero { min-height: 0; padding: 10px 10px 44px; }

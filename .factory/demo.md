@@ -6,3 +6,4 @@
 - Leave: use **Open today’s game**. This removes demo progress before opening the current daily gallery.
 - Storage: the sample stores progress separately under keys that start with `demo:five-minute-heist:`. It never reads or writes daily progress.
 - Offline check: load `/demo`, wait for the service worker to take control, switch the browser offline, then reload.
+- Session check: `npm test -- --grep @claim:session-length` measures a player-paced 4–6 minute sample run. See `.factory/session-length.md`.

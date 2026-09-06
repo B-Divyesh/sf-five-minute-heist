@@ -216,6 +216,36 @@ test("@claim:frame-rate three running phone samples have a 50 fps median floor",
   expect(fps, `running-frame-rate samples: ${samples.map((sample) => sample.toFixed(2)).join(", ")}`).toBeGreaterThanOrEqual(50);
 });
 
+test("@claim:session-length a timed player-paced sample run reaches the real end screen in 4–6 minutes", async ({ page }, testInfo) => {
+  test.setTimeout(390_000);
+  const planningIntervalsMs = [48_000, 48_000, 48_000, 48_000, 48_000];
+  const startedAt = Date.now();
+
+  for (const [index, direction] of sampleSolution.entries()) {
+    await page.waitForTimeout(planningIntervalsMs[index]);
+    await page.locator(`[data-direction="${direction}"]`).click();
+  }
+
+  await page.waitForTimeout(30_000);
+  await page.getByRole("button", { name: "Run the plan" }).click();
+  await expect(page.getByRole("heading", { name: "You escaped with the exhibit" })).toBeVisible({ timeout: 8_000 });
+
+  const elapsedMs = Date.now() - startedAt;
+  console.log(`Timed sample session: ${elapsedMs} ms from ready board to win screen`);
+  await testInfo.attach("session-length.json", {
+    body: JSON.stringify({
+      start: "ready sample board",
+      end: "real win screen",
+      planningIntervalsMs,
+      finalPlanReviewMs: 30_000,
+      elapsedMs
+    }, null, 2),
+    contentType: "application/json"
+  });
+  expect(elapsedMs).toBeGreaterThanOrEqual(240_000);
+  expect(elapsedMs).toBeLessThanOrEqual(360_000);
+});
+
 test("@claim:browser-generated no answer is shipped or requested while the browser builds the board", async ({ page, baseURL }) => {
   const requests: string[] = [];
   page.on("request", (request) => requests.push(request.url()));
@@ -355,6 +385,53 @@ test("mobile links provide 44 by 44 CSS pixel targets on every public page", asy
     for (const link of links) {
       expect.soft(link.width, `${route} “${link.label}” width`).toBeGreaterThanOrEqual(44);
       expect.soft(link.height, `${route} “${link.label}” height`).toBeGreaterThanOrEqual(44);
+    }
+  }
+});
+
+test("phone controls keep at least 8 CSS pixels between adjacent interactive targets at normal and 200 percent text", async ({ page }) => {
+  await page.setViewportSize({ width: 390, height: 844 });
+
+  for (const scale of ["100%", "200%"] as const) {
+    await page.goto("/?demo=1");
+    await page.evaluate(async (fontSize) => {
+      document.documentElement.style.fontSize = fontSize;
+      await document.fonts.ready;
+    }, scale);
+
+    const layout = await page.evaluate(() => {
+      const box = (element: Element) => {
+        const bounds = element.getBoundingClientRect();
+        return { x: bounds.x, y: bounds.y, width: bounds.width, height: bounds.height };
+      };
+      return {
+        directions: [...document.querySelectorAll(".controls button")].map(box),
+        demoActions: [...document.querySelectorAll(".demo-banner button")].map(box),
+        wordmark: box(document.querySelector(".wordmark")!),
+        navigation: [...document.querySelectorAll(".site-nav a")].map(box)
+      };
+    });
+
+    const gapBetween = (first: { x: number; y: number; width: number; height: number }, second: { x: number; y: number; width: number; height: number }) => {
+      const horizontalOverlap = first.x < second.x + second.width && second.x < first.x + first.width;
+      const verticalOverlap = first.y < second.y + second.height && second.y < first.y + first.height;
+      if (verticalOverlap) return Math.abs(second.x - (first.x + first.width));
+      if (horizontalOverlap) return Math.abs(second.y - (first.y + first.height));
+      return Infinity;
+    };
+
+    const directions = [...layout.directions].sort((first, second) => first.x - second.x);
+    for (const [index, direction] of directions.entries()) {
+      if (index === 0) continue;
+      expect(gapBetween(directions[index - 1], direction), `${scale} direction gap ${index}`).toBeGreaterThanOrEqual(8);
+    }
+
+    expect(layout.demoActions).toHaveLength(2);
+    expect(gapBetween(layout.demoActions[0], layout.demoActions[1]), `${scale} demo action gap`).toBeGreaterThanOrEqual(8);
+
+    const navigationTop = Math.min(...layout.navigation.map((link) => link.y));
+    if (navigationTop >= layout.wordmark.y + layout.wordmark.height) {
+      expect(navigationTop - (layout.wordmark.y + layout.wordmark.height), `${scale} wrapped header row gap`).toBeGreaterThanOrEqual(8);
     }
   }
 });

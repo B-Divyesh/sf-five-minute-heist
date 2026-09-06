@@ -2,7 +2,7 @@
 
 Plan five moves through one daily 5 × 5 museum. Two visible guard loops move after each step, and a valid plan reaches the exhibit.
 
-Five-Minute Heist is a free game for one person playing in a browser. Use arrow keys or the on-screen controls. Run the plan, then copy five result symbols that hide your directions. The sample works offline after the first visit. Daily progress stays in local browser storage.
+Five-Minute Heist is a free game for one person playing in a browser. Intended session length: 4–6 minutes. Use arrow keys or the on-screen controls. Run the plan, then copy five result symbols that hide your directions. The sample works offline after the first visit. Daily progress stays in local browser storage.
 
 ## Try the sample
 
@@ -45,6 +45,8 @@ npm run build
 `npm test` runs four repeatable logic tests and checks every registered browser claim in a local copy of Azure Static Web Apps. The suite checks routes, the 390 × 844 layout, accessibility, privacy, and offline reload. It also checks three runs against a 50 fps median floor.
 
 Each command in [.factory/claims.json](.factory/claims.json) runs one observable claim test from the sample entry point.
+
+The timed session check uses a fresh sample board and five player-paced planning intervals. It measures from the ready board to the real end screen. Its method is recorded in [.factory/session-length.md](.factory/session-length.md).
 
 ## Deploy
 
