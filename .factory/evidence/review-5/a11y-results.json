@@ -1,0 +1,295 @@
+{
+  "pages": [
+    {
+      "route": "/",
+      "violations": [],
+      "structure": {
+        "lang": "en",
+        "title": "Five-Minute Heist — Plan a daily museum heist",
+        "h1": 1,
+        "main": 1,
+        "unlabeledButtons": 0,
+        "imagesMissingAlt": 0,
+        "horizontalOverflow": false,
+        "links": [
+          "https://five-minute-heist.sociobot.in/#main",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/demo",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/?demo=1",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/terms",
+          "https://hello-factory.sociobot.in/"
+        ]
+      }
+    },
+    {
+      "route": "/?demo=1",
+      "violations": [],
+      "structure": {
+        "lang": "en",
+        "title": "Demo — Five-Minute Heist",
+        "h1": 1,
+        "main": 1,
+        "unlabeledButtons": 0,
+        "imagesMissingAlt": 0,
+        "horizontalOverflow": false,
+        "links": [
+          "https://five-minute-heist.sociobot.in/?demo=1#main",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/demo",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/terms",
+          "https://hello-factory.sociobot.in/"
+        ]
+      }
+    },
+    {
+      "route": "/demo",
+      "violations": [],
+      "structure": {
+        "lang": "en",
+        "title": "Demo — Five-Minute Heist",
+        "h1": 1,
+        "main": 1,
+        "unlabeledButtons": 0,
+        "imagesMissingAlt": 0,
+        "horizontalOverflow": false,
+        "links": [
+          "https://five-minute-heist.sociobot.in/demo#main",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/demo",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/terms",
+          "https://hello-factory.sociobot.in/"
+        ]
+      }
+    },
+    {
+      "route": "/privacy",
+      "violations": [],
+      "structure": {
+        "lang": "en",
+        "title": "Privacy — Five-Minute Heist",
+        "h1": 1,
+        "main": 1,
+        "unlabeledButtons": 0,
+        "imagesMissingAlt": 0,
+        "horizontalOverflow": false,
+        "links": [
+          "https://five-minute-heist.sociobot.in/privacy#main",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/demo",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "mailto:privacy@sociobot.in",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/terms",
+          "https://hello-factory.sociobot.in/"
+        ]
+      }
+    },
+    {
+      "route": "/terms",
+      "violations": [],
+      "structure": {
+        "lang": "en",
+        "title": "Terms — Five-Minute Heist",
+        "h1": 1,
+        "main": 1,
+        "unlabeledButtons": 0,
+        "imagesMissingAlt": 0,
+        "horizontalOverflow": false,
+        "links": [
+          "https://five-minute-heist.sociobot.in/terms#main",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/demo",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "mailto:hello@sociobot.in",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/terms",
+          "https://hello-factory.sociobot.in/"
+        ]
+      }
+    },
+    {
+      "route": "/not-a-real-page",
+      "violations": [],
+      "structure": {
+        "lang": "en",
+        "title": "Page not found — Five-Minute Heist",
+        "h1": 1,
+        "main": 1,
+        "unlabeledButtons": 0,
+        "imagesMissingAlt": 0,
+        "horizontalOverflow": false,
+        "links": [
+          "https://five-minute-heist.sociobot.in/not-a-real-page#main",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/demo",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/",
+          "https://five-minute-heist.sociobot.in/privacy",
+          "https://five-minute-heist.sociobot.in/terms",
+          "https://hello-factory.sociobot.in/"
+        ]
+      }
+    }
+  ],
+  "linkResults": [
+    {
+      "href": "/",
+      "status": 200,
+      "expectedStatus": 200,
+      "pass": true
+    },
+    {
+      "href": "/?demo=1",
+      "status": 200,
+      "expectedStatus": 200,
+      "pass": true
+    },
+    {
+      "href": "/demo",
+      "status": 200,
+      "expectedStatus": 200,
+      "pass": true
+    },
+    {
+      "href": "/not-a-real-page",
+      "status": 404,
+      "expectedStatus": 404,
+      "pass": true
+    },
+    {
+      "href": "/privacy",
+      "status": 200,
+      "expectedStatus": 200,
+      "pass": true
+    },
+    {
+      "href": "/terms",
+      "status": 200,
+      "expectedStatus": 200,
+      "pass": true
+    }
+  ],
+  "externalLinks": [
+    "https://hello-factory.sociobot.in/"
+  ],
+  "mailLinks": [
+    "mailto:privacy@sociobot.in",
+    "mailto:hello@sociobot.in"
+  ],
+  "keyboard": {
+    "focusableCount": 15,
+    "visitedCount": 14,
+    "first": {
+      "tag": "A",
+      "label": "Skip to game",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    "allNativeControls": true,
+    "allHaveOutline": true
+  },
+  "focusSequence": [
+    {
+      "tag": "A",
+      "label": "Skip to game",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "A",
+      "label": "Five-Minute Heist",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "A",
+      "label": "Daily",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "A",
+      "label": "Demo",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "A",
+      "label": "Privacy",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Reset demo",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Open today’s game",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Turn sound on",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Add move U — up",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Add move R — right",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Add move D — down",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "BUTTON",
+      "label": "Add move L — left",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "A",
+      "label": "Privacy",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "A",
+      "label": "Terms",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    },
+    {
+      "tag": "A",
+      "label": "Built by Param Factory (opens in a new tab)",
+      "outlineWidth": "3px",
+      "outlineStyle": "solid"
+    }
+  ]
+}

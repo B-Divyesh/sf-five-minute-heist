@@ -1,0 +1,20 @@
+{
+  "url": "https://five-minute-heist.sociobot.in/?demo=1",
+  "viewport": "390x844",
+  "selector": ".controls",
+  "computed_column_gap_px": 6,
+  "adjacent_button_gaps_px": [6, 6, 6],
+  "button_sizes_px": [
+    { "label": "Add move U — up", "width": 82.5, "height": 44 },
+    { "label": "Add move R — right", "width": 82.5, "height": 44 },
+    { "label": "Add move D — down", "width": 82.5, "height": 44 },
+    { "label": "Add move L — left", "width": 82.5, "height": 44 }
+  ],
+  "at_200_percent_text": [
+    { "targets": "wordmark to Daily/Demo/Privacy row", "vertical_gap_px": 4 },
+    { "targets": "Reset demo to Open today’s game", "vertical_gap_px": 6 },
+    { "targets": "four direction buttons", "horizontal_gaps_px": [6, 6, 6] }
+  ],
+  "required_adjacent_gap_px": 8,
+  "result": "FAIL"
+}

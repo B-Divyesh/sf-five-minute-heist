@@ -1,6 +1,12 @@
-# Five-Minute Heist repair 3 handoff
+# Five-Minute Heist handoff
 
-## Outcome
+## Current review status
+
+Review 5 returns **FAIL — 2 low-severity findings and 0 untested claims**. The live game and all 17 claims pass, but adjacent phone controls have less than the required 8 px spacing. The README also still omits the intended 4–6 minute session length identified in verification 2.
+
+No product code was changed in review 5. Implementation `9ca7b1658f9c7edc54f9d3db77d05401d8a3df16` remains live and matches a clean build. See [review-5.md](review-5.md) and `evidence/review-5/`.
+
+## Repair 3 implementation outcome
 
 Repair 3 is complete and deployed. The implementation candidate is `9ca7b1658f9c7edc54f9d3db77d05401d8a3df16`; later report and evidence commits do not change the deployed product.
 
@@ -68,9 +74,9 @@ Evidence:
 - [Live demo verifier](evidence/repair-3/live-demo/verify.json)
 - [Lighthouse report](evidence/repair-3/lighthouse-live.json)
 
-## Remaining scope
+## Repair 3 remaining scope record
 
-No known product defect remains. The brief’s 4–6 minute target is an intent, not a measured public promise. A future duration claim needs a defensible timed-player study before it returns to public copy.
+At the repair 3 handoff, no product defect was known. The brief’s 4–6 minute target was treated as intent rather than a measured public promise. Review 5 supersedes that status below.
 
 This is a static, local-first game. Backend persistence, tenant isolation, API health, and 429 behavior do not apply. AI would not improve the five-move puzzle job, so no model or external integration was added.
 
@@ -109,3 +115,16 @@ See [review-3.md](review-3.md) and `evidence/review-3/` for screenshots, verifie
 - The live HTML, service worker, JS, and CSS hashes equal a new candidate build. The designed unknown route remains the expected HTTP 404.
 
 See [review-4.md](review-4.md) and `evidence/review-4/` for the detailed evidence.
+
+## Review 5
+
+**FAIL — 2 low-severity findings and 0 untested claims.** Review 5 checked implementation `9ca7b1658f9c7edc54f9d3db77d05401d8a3df16` from documentation baseline `23ed6f63d9165c5db7d75ffef25b2181d9d5a00e`.
+
+- At 390 px, adjacent direction controls have 6 px gaps. At 200% text, the wrapping header has a 4 px gap and the demo actions have a 6 px gap. The required minimum is 8 px.
+- The README does not state the intended 4–6 minute session length. Verification 2 reported this omission. Adding an untested duration claim and then removing it did not resolve both the game-documentation and claims requirements.
+- All 17 declared claims passed independently after a clean `npm ci`. `npm test`, `npm run build`, `npm audit --audit-level=high`, and all 24 live browser tests passed.
+- Fresh phone and desktop runs covered touch, keyboard, wall/guard/missed-goal losses, reset, recovery, pause/resume, a 1,000-point win, result symbols, replay reset, sound persistence, demo isolation, reduced motion, and offline completion.
+- Axe found zero violations across all six public route forms. URL verification, route/link checks, same-origin request checks, and candidate-to-live file hashes passed.
+- Three active phone samples measured a 60.006 fps median. Twenty fresh phone loads measured a 237 ms p95. Lighthouse recorded 100/100/100/100, LCP 1.4 s, TBT 40 ms, CLS 0.001, and 136 KiB transferred before its Chromium tab crashed during final screenshot collection.
+
+Next work: increase all adjacent phone-control gaps to at least 8 px and add a geometry regression test. Add the intended session length only with a defensible timed-player measurement and registered claim test. Re-run every claim and the strict live review after deployment.
