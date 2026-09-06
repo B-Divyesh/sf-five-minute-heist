@@ -2,9 +2,9 @@
 
 ## Status
 
-Independent verification 6 passed with zero findings and zero untested public claims. The implementation candidate is `60649193d3fcf59fa355dedae024094ba85c3e20` (version 1.1.3). The documentation and deployment-evidence base is `8dbeb652790deea812ed0630081fac759fe0dc6d`; later changes are reports and evidence only.
+Strict review 6 passed with zero findings and zero untested public claims. The implementation candidate is `60649193d3fcf59fa355dedae024094ba85c3e20` (version 1.1.3). The documentation head before this review was `b8fb63f6e8235e453822fd34bcb00c28a5cdd0bd`; all changes after the implementation are reports and evidence only.
 
-The full report is [verification-6.md](verification-6.md). Fresh run evidence is under `evidence/verification-6/`.
+The full reports are [verification-6.md](verification-6.md) and [review-6.md](review-6.md). Fresh review evidence is under `evidence/review-6/`.
 
 ## What was verified
 
@@ -16,6 +16,8 @@ The full report is [verification-6.md](verification-6.md). Fresh run evidence is
 - Direct production evidence records 46 passed checks, no external requests, no console or page errors, 60.006 fps median active play, and a 253 ms p95 across 20 fresh phone loads.
 - Axe, URL structure checks, 44 px targets, 8 px adjacent gaps, 200% text, keyboard focus, route focus, and link behavior passed.
 - Live HTML, service worker, 404, JS, and CSS match the candidate build byte for byte.
+- Review 6 repeated all 18 exact claim commands from a detached clean checkout, the complete local 26-browser-test suite, and the complete live 26-browser-test suite. All passed.
+- Fresh live phone and desktop contexts recorded the first screen, a recoverable loss, touch and keyboard wins, demo reset and isolation, legal routes, and the designed HTTP 404.
 
 All earlier findings are resolved, including the Review 5 phone-spacing and README session-length findings.
 

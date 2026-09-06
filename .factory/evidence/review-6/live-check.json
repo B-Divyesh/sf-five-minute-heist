@@ -1,0 +1,44 @@
+{
+  "liveUrl": "https://five-minute-heist.sociobot.in",
+  "phone": {
+    "rootStatus": 200,
+    "scrollY": 0,
+    "job": "Plan a five-move museum heist",
+    "audience": "For solo players who want a short daily puzzle without another word game.",
+    "firstAction": "Try it with sample data",
+    "rootBoardY": 735.46875,
+    "externalOrigins": [],
+    "demoLabel": "Demo — sample data, nothing is saved to your daily game.\n    Reset demo\n    Open today’s game",
+    "demoBoardY": 337.625,
+    "invalidLoss": "Move 1 hit a wall. Remove moves and try another route.",
+    "winScore": "1,000 points",
+    "resultSymbols": "◆△✦△◆",
+    "playAgainPlan": "Your five moves0/5",
+    "dailyStorageAfterDemoExit": [
+      "five-minute-heist:review-sentinel"
+    ]
+  },
+  "desktop": {
+    "rootStatus": 200,
+    "scrollY": 0,
+    "boardY": 373.5,
+    "keyboardWin": true
+  },
+  "routes": {
+    "/privacy": {
+      "status": 200,
+      "title": "Privacy — Five-Minute Heist",
+      "h1": "Your game stays in your browser"
+    },
+    "/terms": {
+      "status": 200,
+      "title": "Terms — Five-Minute Heist",
+      "h1": "Play for free and share fairly"
+    },
+    "/not-a-real-page": {
+      "status": 404,
+      "title": "Page not found — Five-Minute Heist",
+      "h1": "Page not found"
+    }
+  }
+}
