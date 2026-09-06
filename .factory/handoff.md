@@ -98,3 +98,14 @@ Evidence and the detailed finding disposition are in [verification-5.md](verific
 - Three fresh phone active-play readings were 60, 60, and 60 fps. The expected unknown route returns the designed HTTP 404.
 
 See [review-3.md](review-3.md) and `evidence/review-3/` for screenshots, verifier output, and the scripted live-run data. No known product defect remains.
+
+## Review 4
+
+**PASS — zero findings and zero untested claims.** Review 4 checked implementation `9ca7b1658f9c7edc54f9d3db77d05401d8a3df16` at documentation head `43e6a59f366216be8dd2301a4ca482fc64a8f25e`. The later commits still change reports and evidence only.
+
+- `npm ci`, each of the 17 declared claim commands, `npm test`, `npm run build`, `npm audit --audit-level=high`, and the 24-test live suite passed.
+- A fresh touch phone run completed loss → reset → 1,000-point win → replay reset. A fresh desktop keyboard run won and proved demo storage could not alter daily storage.
+- Fresh offline and reduced-motion contexts stayed playable. URL verifier and Axe coverage passed; direct requests recorded no external runtime origin, cookies, or console error.
+- The live HTML, service worker, JS, and CSS hashes equal a new candidate build. The designed unknown route remains the expected HTTP 404.
+
+See [review-4.md](review-4.md) and `evidence/review-4/` for the detailed evidence.
